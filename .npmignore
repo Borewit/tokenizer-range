@@ -1,0 +1,14 @@
+config/
+coverage/
+*.iml
+.travis.yml
+.eslintrc
+tsconfig.json
+tslint.json
+yarn-error.log
+karma.conf.js
+.nyc_output
+lib/**/*.js
+lib/**/*.d.ts
+test/**/*.js
+**/*.log
