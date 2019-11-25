@@ -1,0 +1,93 @@
+{
+  "name": "@tokenizer/range",
+  "version": "0.1.0",
+  "description": "Range-request tokenizer adapter",
+  "main": "lib/range-request-tokenizer",
+  "typings": "lib/range-request-tokenizer",
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Borewit/tokenizer-range.git"
+  },
+  "author": {
+    "name": "Borewit",
+    "url": "https://github.com/Borewit"
+  },
+  "keywords": [
+    "xhr",
+    "http",
+    "strtok3",
+    "tokenizer",
+    "RFC-7233",
+    "range",
+    "chunk",
+    "byte-serving",
+    "https",
+    "client",
+    "meta",
+    "metadata",
+    "audio",
+    "media",
+    "tags"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Borewit/tokenizer-range/issues"
+  },
+  "scripts": {
+    "clean": "del-cli lib/**/*.js lib/**/*.js.map lib/**/*.d.ts test-data/**/*.js test-data/**/*.js.map coverage",
+    "compile-lib": "tsc -p lib/tsconfig.json",
+    "compile-test": "tsc -p test/tsconfig.json",
+    "compile": "npm run compile-lib && yarn run compile-test",
+    "prepublishOnly": "yarn run build",
+    "build": "npm run clean && yarn run compile",
+    "lint": "tslint 'lib/**/*.ts' --exclude 'lib/**/*.d.ts' 'test/**/*.ts' --exclude 'test/**/*.d.ts'",
+    "test": "mocha --require ts-node/register --require source-map-support/register --full-trace test/test.ts",
+    "test-node": "cd node && yarn install && yarn test-data",
+    "karma-once": "karma start --browsers Chrome --single-run",
+    "travis-karma": "karma start --browsers Firefox --single-run",
+    "test-coverage": "nyc npm run test",
+    "post-coveralls": "coveralls < coverage/lcov.info"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.5",
+    "@types/fs-extra": "^8.0.1",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.7",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.7",
+    "del-cli": "^3.0.0",
+    "fs-extra": "^8.1.0",
+    "music-metadata": "^5.0.1",
+    "music-metadata-browser": "^1.6.1",
+    "nyc": "^14.1.1",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.5.2",
+    "tslint": "^5.20.0",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "mocha": "^6.2.2",
+    "strtok3": "^3.0.4"
+  },
+  "nyc": {
+    "exclude": [
+      "test/**/*.ts",
+      "src/**/*.js"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "report-dir": "coverage"
+  }
+}
