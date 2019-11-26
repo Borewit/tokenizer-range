@@ -57,7 +57,7 @@
     "@types/fs-extra": "^8.0.1",
     "@types/jasmine": "^3.4.4",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.12.7",
+    "@types/node": "^12.12.14",
     "chai": "^4.2.0",
     "coveralls": "^3.0.7",
     "del-cli": "^3.0.0",
