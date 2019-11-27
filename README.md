@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/Borewit/tokenizer-range.svg?branch=master)](https://travis-ci.org/Borewit/tokenizer-range)
-[![NPM version](https://badge.fury.io/js/@tokenizer/range.svg)](https://npmjs.org/package/@tokenizer/range)
+[![NPM version](https://badge.fury.io/js/%40tokenizer%2Frange.svg)](https://badge.fury.io/js/%40tokenizer%2Frange)[![npm downloads](http://img.shields.io/npm/dm/@tokenizer/range.svg)](https://npmcharts.com/compare/@tokenizer/range?interval=30)
 [![npm downloads](http://img.shields.io/npm/dm/@tokenizer/range.svg)](https://npmcharts.com/compare/@tokenizer/range?interval=30)
 [![dependencies Status](https://david-dm.org/Borewit/tokenizer-range/status.svg)](https://david-dm.org/Borewit/tokenizer-range)
 [![Known Vulnerabilities](https://snyk.io/test/github/Borewit/tokenizer-range/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Borewit/tokenizer-range?targetFile=package.json)
@@ -12,6 +12,18 @@ Adapter to designed to convert [strtok3 _tokenizer_](https://github.com/Borewit/
 
 ## Compatibility
 This module can be used both in the browser and in [Node.js](https://nodejs.org).
+
+## Installation
+
+```shell script
+npm install @tokenizer/range
+```
+
+or 
+
+```shell script
+yarn add @tokenizer/range
+```
 
 ## Licence
 
