@@ -1,6 +1,7 @@
 version: 1
 update_configs:
   - package_manager: "javascript"
+    version_requirement_updates: "increase_versions"
     directory: "/"
     update_schedule: "daily"
     automerged_updates:
@@ -17,3 +18,7 @@ update_configs:
           dependency_name: "typescript"
       - match:
           dependency_name: "music-metadata"
+      - match:
+          dependency_name: "strtok3"
+      - match:
+          dependency_name: "@types/chai"
