@@ -6,6 +6,9 @@ lib/**/*.js
 lib/**/*.map
 lib/**/*.d.ts
 
+test/**/*.js
+test/**/*.js.map
+
 # dependencies
 /node_modules
 
