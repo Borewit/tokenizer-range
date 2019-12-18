@@ -22,7 +22,7 @@ describe('range-request-client', function() {
     const {format, common} = await mm.parseFromTokenizer(rangeRequestTokenizer, rangeRequestTokenizer.contentType, {});
 
     assert.equal(format.container, 'MPEG', 'metadata.format.container');
-    assert.equal(format.codec, 'MP3', 'format.codec');
+    assert.equal(format.codec, 'MPEG 1 Layer 3', 'format.codec');
     assert.equal(format.codecProfile, 'V0', 'format.codecProfile');
     assert.deepEqual(format.tagTypes, ['ID3v2.4', 'ID3v1'], 'metadata.format.tagTypes');
 
