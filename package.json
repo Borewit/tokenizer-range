@@ -1,6 +1,6 @@
 {
   "name": "@tokenizer/range",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Range-request tokenizer adapter",
   "main": "lib/range-request-tokenizer",
   "typings": "lib/range-request-tokenizer",
