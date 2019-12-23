@@ -26,3 +26,5 @@ update_configs:
           dependency_name: "coveralls"
       - match:
           dependency_name: "music-metadata-browser"
+      - match:
+          dependency_name: "nyc"
