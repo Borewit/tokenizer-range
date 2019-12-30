@@ -1615,10 +1615,10 @@ music-metadata-browser@^1.10.0:
     remove "^0.1.5"
     typedarray-to-buffer "^3.1.5"
 
-music-metadata@^5.3.1, music-metadata@^5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/music-metadata/-/music-metadata-5.4.1.tgz#86e1cde463faddd0881391981cbb4c046e892cc7"
-  integrity sha512-3SRQt5TENvowbm30N6E6y0lY0vpfjRg9nUyyYXg0Dfu1smZjcmjuonVpxqQMCwN2l5h6bnbxeSP+GJp03foqxQ==
+music-metadata@^5.3.1, music-metadata@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/music-metadata/-/music-metadata-5.4.3.tgz#b13c22e59312788922b0656e45a181075148cf6b"
+  integrity sha512-jGEfhqgfs3omD9sqaQg9ZzYXxsYYqv9wxMWz40WTNtm9cY7NE9TX+y+cL/JCs2Bs3+rj5xokOn6ZddpVvGsVFg==
   dependencies:
     content-type "^1.0.4"
     debug "^4.1.0"
