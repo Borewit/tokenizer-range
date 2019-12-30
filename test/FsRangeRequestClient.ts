@@ -14,8 +14,9 @@ export class FsRangeRequestClient implements IRangeRequestClient {
   public async getHeadInfo(): Promise<IHeadRequestInfo> {
     const stat = await fs.stat(this.fixturePath);
     return {
-      contentLength: stat.size,
-      contentType: this.getContentType()
+      size: stat.size,
+      mimeType: this.getContentType(),
+      path: this.fixturePath
     };
   }
 
@@ -23,9 +24,10 @@ export class FsRangeRequestClient implements IRangeRequestClient {
     const stat = await fs.stat(this.fixturePath);
     range = range ? range : [0, stat.size - 1];
     return {
-      contentLength: stat.size,
-      contentType: this.getContentType(),
-      arrayBuffer: () => this.getData(range)
+      size: stat.size,
+      mimeType: this.getContentType(),
+      arrayBuffer: () => this.getData(range),
+      path: this.fixturePath
     };
   }
 

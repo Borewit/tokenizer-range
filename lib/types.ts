@@ -1,12 +1,19 @@
+import { IFileInfo } from 'strtok3/lib/core';
+
+export interface IRangeRequestConfig {
+  timeoutInSec?: number;
+  avoidHeadRequests?: boolean;
+  initialChunkSize?: number;
+  minimumChunkSize?: number;
+}
+
 export interface IContentRangeType {
   firstBytePosition?: number;
   lastBytePosition?: number;
   instanceLength?: number;
 }
 
-export interface IHeadRequestInfo {
-  contentLength?: number;
-  contentType?: string;
+export interface IHeadRequestInfo extends IFileInfo {
   contentRange?: IContentRangeType;
 }
 

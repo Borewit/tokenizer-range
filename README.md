@@ -25,6 +25,20 @@ or
 yarn add @tokenizer/range
 ```
 
+## Usage
+
+```js
+(async () => {
+  const config = {
+    avoidHeadRequests: false
+  };
+
+  let rangeRequestClient; // HTTP implementation, or HTTP cloud access adaptor
+
+  const tokenizer = await rangeRequestTokenizer.tokenizer(rangeRequestClient, config);
+})();
+```
+
 ## Licence
 
 (The MIT License)

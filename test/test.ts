@@ -2,7 +2,7 @@ import {assert} from 'chai';
 import * as mm from 'music-metadata';
 import * as path from 'path';
 
-import { RangeRequestTokenizer } from '../lib/range-request-tokenizer';
+import * as rangeRequestTokenizer from '../lib';
 import { FsRangeRequestClient } from './FsRangeRequestClient';
 
 describe('range-request-client', function() {
@@ -17,9 +17,8 @@ describe('range-request-client', function() {
     const fixturePath = path.join(__dirname, 'fixture', '02 - Poxfil - Solid Ground.mp3');
     const rangeRequestClient = new FsRangeRequestClient(fixturePath);
 
-    const rangeRequestTokenizer = new RangeRequestTokenizer(rangeRequestClient, config);
-    await rangeRequestTokenizer.init();
-    const {format, common} = await mm.parseFromTokenizer(rangeRequestTokenizer, rangeRequestTokenizer.contentType, {});
+    const tokenizer = await rangeRequestTokenizer.tokenizer(rangeRequestClient, config);
+    const {format, common} = await mm.parseFromTokenizer(tokenizer);
 
     assert.equal(format.container, 'MPEG', 'metadata.format.container');
     assert.equal(format.codec, 'MPEG 1 Layer 3', 'format.codec');

@@ -2,8 +2,8 @@
   "name": "@tokenizer/range",
   "version": "0.1.1",
   "description": "Range-request tokenizer adapter",
-  "main": "lib/range-request-tokenizer",
-  "typings": "lib/range-request-tokenizer",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "files": [
     "lib/**/*.js",
     "lib/**/*.d.ts"
@@ -47,8 +47,6 @@
     "lint": "tslint 'lib/**/*.ts' --exclude 'lib/**/*.d.ts' 'test/**/*.ts' --exclude 'test/**/*.d.ts'",
     "test": "mocha --require ts-node/register --require source-map-support/register --full-trace test/test.ts",
     "test-node": "cd node && yarn install && yarn test-data",
-    "karma-once": "karma start --browsers Chrome --single-run",
-    "travis-karma": "karma start --browsers Firefox --single-run",
     "test-coverage": "nyc npm run test",
     "post-coveralls": "coveralls < coverage/lcov.info"
   },
@@ -62,8 +60,7 @@
     "del-cli": "^3.0.0",
     "fs-extra": "^8.1.0",
     "mocha": "^6.2.2",
-    "music-metadata": "^5.4.3",
-    "music-metadata-browser": "^1.10.0",
+    "music-metadata": "^6.0.0",
     "nyc": "^15.0.0",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.5.2",
@@ -72,7 +69,7 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "strtok3": "^4.1.1"
+    "strtok3": "^5.0.0"
   },
   "nyc": {
     "exclude": [
