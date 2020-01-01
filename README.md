@@ -15,12 +15,12 @@ This module can be used both in the browser and in [Node.js](https://nodejs.org)
 
 ## Installation
 
+Install using [npm](https://www.npmjs.com/get-npm):
 ```shell script
 npm install @tokenizer/range
 ```
 
-or 
-
+or using [yarn](https://yarnpkg.com/):
 ```shell script
 yarn add @tokenizer/range
 ```
