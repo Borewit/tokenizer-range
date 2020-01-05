@@ -10,6 +10,10 @@
 
 Adapter to designed to convert [strtok3 _tokenizer_](https://github.com/Borewit/strtok3#tokenizer) to [RFC-7233](https://tools.ietf.org/html/rfc7233#section-2.3) [range requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests).
 
+It is an **abstract** module which implements the range request mechanism which can be used by different implementations, like:
+* [@tokenizer/http](https://github.com/Borewit/tokenizer-http): An HTTP(S) client
+* [@tokenizer/s3](https://github.com/Borewit/tokenizer-s3): An Amazon S3 client
+
 ## Compatibility
 This module can be used both in the browser and in [Node.js](https://nodejs.org).
 
@@ -38,6 +42,38 @@ yarn add @tokenizer/range
   const tokenizer = await rangeRequestTokenizer.tokenizer(rangeRequestClient, config);
 })();
 ```
+
+## Range-request-client
+
+The `IRangeRequestClient` defines the interface to map, presumably an HTTP client, to the range request mechanism.
+
+```ts
+/**
+ * Implementation of the range-request-client
+ */
+export interface IRangeRequestClient {
+
+  /**
+   * Head request to determine the size and MIME-type of the file
+   * @return HEAD-request information
+   */
+  getHeadInfo?(): Promise<IHeadRequestInfo>;
+
+  /**
+   *
+   * @param method - HTTP method
+   * @param range - Array of 2 numbers: The range-start and range-end. An integer indicating the beginning and the end of range request in bytes.
+   * @return Range request response
+   */
+  getResponse(method: string, range?: [number, number]): Promise<IRangeRequestResponse>;
+}
+```
+
+For further details of the interface see: [lib/types.ts](lib/types.ts)
+
+Example implementations of the `IRangeRequestClient` interface:
+* [@tokenizer/s3](https://github.com/Borewit/tokenizer-s3/blob/master/lib/s3-request.ts)
+* [@tokenizer/http](https://github.com/Borewit/tokenizer-http/blob/master/lib/http-client.ts)
 
 ## Licence
 

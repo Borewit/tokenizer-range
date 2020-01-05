@@ -10,7 +10,7 @@ export { parseContentRange } from './range-request-tokenizer';
  * @param config - Cpnfiguration
  * @return Tokenizer
  */
-export async function tokenizer(rangeRequestClient: IRangeRequestClient, config?: IRangeRequestConfig): Promise<ITokenizer> {
+export function tokenizer(rangeRequestClient: IRangeRequestClient, config?: IRangeRequestConfig): Promise<ITokenizer> {
   const factory = new RangeRequestFactory(rangeRequestClient);
   return factory.initTokenizer(config);
 }
