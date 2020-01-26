@@ -2,6 +2,7 @@ import * as initDebug from 'debug';
 import { AbstractTokenizer } from 'strtok3/lib/AbstractTokenizer';
 import { ChunkedFileData } from './chunked-file-data';
 import { IContentRangeType, IHeadRequestInfo, IRangeRequestClient } from './types';
+import { IReadChunkOptions } from 'strtok3/lib/types';
 
 const debug = initDebug('range-request-reader');
 
@@ -26,29 +27,17 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
   /**
    * Read portion from stream
-   * @param {Buffer} buffer: Target buffer
-   * @param {number} offset: Offset is the offset in the buffer to start writing at; if not provided, start at 0
-   * @param {number} length: The number of bytes to read, of not provided the buffer length will be used
-   * @param {number} position: Position where to begin reading from in the file. If position is not defined, data will be read from the current file position.
-   * @returns {Promise<number>}
+   * @param buffer - Target buffer
+   * @param options - Additional read options
+   * @returns Promise with number of bytes read
    */
-  public async readBuffer(buffer: Buffer, offset: number = 0, length: number = buffer.length, position?: number): Promise<number> {
+  public async readBuffer(buffer: Buffer, options?: IReadChunkOptions): Promise<number> {
 
-    if (position) {
-      this.position = position;
+    if (options && options.position) {
+      this.position = options.position;
     }
 
-    debug(`readBuffer position=${this.position} length=${length}`);
-
-    if (length === 0) {
-      return 0;
-    }
-
-    if (!length) {
-      length = buffer.length;
-    }
-
-    await this.peekBuffer(buffer, offset, length, this.position);
+    const length = await this.peekBuffer(buffer, options);
     this.position += length;
     return length;
   }
@@ -56,13 +45,32 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
   /**
    * Peek (read ahead) buffer from tokenizer
    * @param buffer - Target buffer to fill with data peek from the tokenizer-stream
-   * @param offset - The offset in the buffer to start writing at; if not provided, start at 0
-   * @param length - is an integer specifying the number of bytes to read
-   * @param position is an integer specifying where to begin reading from in the file. If position is null, data will be read from the current file position.
-   * @param maybeless - If set, will not throw an EOF error if not all of the requested data could be read
+   * @param options - Additional read options
    * @returns Promise with number of bytes read
    */
-  public peekBuffer(buffer: Buffer, offset: number = 0, length: number = buffer.length, position: number = this.position): Promise<number> {
+  public async peekBuffer(buffer: Buffer, options?: IReadChunkOptions): Promise<number> {
+
+    let length = buffer.length;
+    let offset = 0;
+    let position = this.position;
+
+    if (options) {
+      if (options.position) {
+        position = options.position;
+      }
+      if (Number.isInteger(options.offset)) {
+        offset = options.offset;
+      }
+      if (options.length) {
+        length = options.length;
+      } else {
+        length -= offset;
+      }
+    }
+
+    if (length === 0) {
+      return 0;
+    }
 
     debug(`peekBuffer position=${position} length=${length}`);
 
