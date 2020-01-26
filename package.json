@@ -1,6 +1,6 @@
 {
   "name": "@tokenizer/range",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Range-request tokenizer adapter",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
