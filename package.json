@@ -53,7 +53,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.10",
     "@types/fs-extra": "^8.0.1",
-    "@types/mocha": "^5.2.7",
+    "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.7",
     "chai": "^4.2.0",
     "coveralls": "^3.0.7",
