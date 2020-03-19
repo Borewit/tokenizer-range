@@ -63,7 +63,7 @@
     "music-metadata": "^6.3.6",
     "nyc": "^15.0.0",
     "ts-loader": "^6.2.1",
-    "ts-node": "^8.6.2",
+    "ts-node": "^8.7.0",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3"
   },
