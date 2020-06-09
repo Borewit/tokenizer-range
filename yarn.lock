@@ -2229,10 +2229,10 @@ strip-json-comments@2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-strtok3@^6.0.0, strtok3@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-6.0.1.tgz#dc3c24430451587a0b6bc209ce5cb858c61376e7"
-  integrity sha512-dmBTylowukrX+XSofIFGbWitdYFIHNWhKpNCukNtQJWjbl+IjwRJvSTIjA7ePa+NZqXQvL82d+tzNgU9WFkDuA==
+strtok3@^6.0.0, strtok3@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-6.0.2.tgz#b81443d4f98624e9429b1b37a44eac15fb379f0f"
+  integrity sha512-8/LNTW+SFsfUXbo0P/zNz5FqMVaKCZSZ3/aycaPw7l9RiNutj0XSLI9AcyJcLR+iIL/2FrpUHZxHfAzN7xisAA==
   dependencies:
     "@tokenizer/token" "^0.1.1"
     "@types/debug" "^4.1.5"
