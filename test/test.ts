@@ -18,6 +18,7 @@ describe('range-request-client', function() {
     const rangeRequestClient = new FsRangeRequestClient(fixturePath);
 
     const tokenizer = await rangeRequestTokenizer.tokenizer(rangeRequestClient, config);
+    
     const {format, common} = await mm.parseFromTokenizer(tokenizer);
 
     assert.equal(format.container, 'MPEG', 'metadata.format.container');
@@ -29,4 +30,16 @@ describe('range-request-client', function() {
     assert.equal(common.title, 'Solid Ground', 'common.title');
   });
 
+  it.only('Parse empty PDF file', async () => {
+    const fixturePath = path.join(__dirname, 'fixture', 'emptypage.pdf');
+    const rangeRequestClient = new FsRangeRequestClient(fixturePath);
+
+    const tokenizer = await rangeRequestTokenizer.tokenizer(rangeRequestClient, config);
+
+    try {
+      await mm.parseFromTokenizer(tokenizer);
+      assert.fail();
+    } catch(err) {
+      assert.match(err.message, /application\/pdf/);
+    }
 });

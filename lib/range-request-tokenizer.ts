@@ -74,11 +74,11 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
     debug(`peekBuffer position=${position} length=${length}`);
 
-    const lastPos = position + length - 1;
+    const lastPos = Math.min(this.fileInfo.size - 1, position + length - 1);
 
     return this.loadRange([position, lastPos]).then(() => {
 
-      this._fileData.readToBuffer(buffer, offset, position, length);
+      this._fileData.readToBuffer(buffer, offset, position, Math.min(this.fileInfo.size, length));
 
       return length;
     });
@@ -106,7 +106,6 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
     }
 
     debug(`request range ${range[0]}..${range[1]}`);
-    range[1] = Math.min(this.fileInfo.size - 1, range[1]);
 
     debug(`adjusted range ${range[0]}..${range[1]}`);
     if (this._fileData.hasDataRange(range[0], range[1])) {
