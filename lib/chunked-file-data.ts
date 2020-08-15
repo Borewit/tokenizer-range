@@ -89,9 +89,9 @@ export class ChunkedFileData {
 
     for (let i = 0; i < this._fileData.length; i++) {
       const dataChunkStart = this._fileData[i].offset;
-      const dataChunkEnd = dataChunkStart + this._fileData[i].data.byteLength - 1;
+      const dataChunkEnd = dataChunkStart + this._fileData[i].data.byteLength;
 
-      if (_pos_offset >= dataChunkStart && _pos_offset <= dataChunkEnd) {
+      if (_pos_offset >= dataChunkStart && _pos_offset < dataChunkEnd) {
         dataChunk = this._fileData[i];
         const chunkOffset = _pos_offset - dataChunkStart;
         const chunkLength = Math.min(length, dataChunk.data.byteLength - chunkOffset);
@@ -102,7 +102,6 @@ export class ChunkedFileData {
         return;
       }
     }
-    throw new Error(`Offset ${_pos_offset} hasn't been loaded yet.`);
   }
 
   private _concatData(buffer1: ArrayBuffer, buffer2: ArrayBuffer): ArrayBuffer {

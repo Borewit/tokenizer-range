@@ -35,3 +35,5 @@ update_configs:
           dependency_name: "nyc"
       - match:
           dependency_name: "tslint"
+      - match:
+          dependency_name: "ts-loader"
