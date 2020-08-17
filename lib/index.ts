@@ -7,7 +7,7 @@ export { parseContentRange } from './range-request-tokenizer';
 /**
  * Construct range-tokenizer from range-request-client and config
  * @param rangeRequestClient - HTTP range request client
- * @param config - Cpnfiguration
+ * @param config - Configuration
  * @return Tokenizer
  */
 export function tokenizer(rangeRequestClient: IRangeRequestClient, config?: IRangeRequestConfig): Promise<ITokenizer> {
