@@ -82,7 +82,7 @@ export class ChunkedFileData {
     return false;
   }
 
-  public readToBuffer(buffer: Buffer, offset: number, position: number, length: number) {
+  public readToBuffer(buffer: Buffer, offset: number, position: number, length: number): number {
 
     const _pos_offset = position ;
     let dataChunk: IChunk;
@@ -94,14 +94,15 @@ export class ChunkedFileData {
       if (_pos_offset >= dataChunkStart && _pos_offset < dataChunkEnd) {
         dataChunk = this._fileData[i];
         const chunkOffset = _pos_offset - dataChunkStart;
-        const chunkLength = Math.min(length, dataChunk.data.byteLength - chunkOffset);
+        let chunkLength = Math.min(length, dataChunk.data.byteLength - chunkOffset);
         Buffer.from(dataChunk.data).copy(buffer, offset, chunkOffset, chunkOffset + chunkLength);
         if (chunkLength < length) {
-          return this.readToBuffer(buffer, offset + chunkLength, position + chunkLength, length - chunkLength);
+          chunkLength += this.readToBuffer(buffer, offset + chunkLength, position + chunkLength, length - chunkLength);
         }
-        return;
+        return chunkLength;
       }
     }
+    return 0;
   }
 
   private _concatData(buffer1: ArrayBuffer, buffer2: ArrayBuffer): ArrayBuffer {
