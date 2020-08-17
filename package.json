@@ -45,7 +45,7 @@
     "prepublishOnly": "yarn run build",
     "build": "npm run clean && yarn run compile",
     "lint": "tslint 'lib/**/*.ts' --exclude 'lib/**/*.d.ts' 'test/**/*.ts' --exclude 'test/**/*.d.ts'",
-    "test": "mocha --require ts-node/register --require source-map-support/register --full-trace test/test.ts",
+    "test": "mocha --require ts-node/register --require source-map-support/register --full-trace test/*.test.ts",
     "test-node": "cd node && yarn install && yarn test-data",
     "test-coverage": "nyc npm run test",
     "post-coveralls": "coveralls < coverage/lcov.info"

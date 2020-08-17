@@ -30,7 +30,7 @@ describe('range-request-client', function() {
     assert.equal(common.title, 'Solid Ground', 'common.title');
   });
 
-  it.only('Parse empty PDF file', async () => {
+  it('Parse empty PDF file', async () => {
     const fixturePath = path.join(__dirname, 'fixture', 'emptypage.pdf');
     const rangeRequestClient = new FsRangeRequestClient(fixturePath);
 
