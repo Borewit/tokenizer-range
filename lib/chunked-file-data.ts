@@ -2,7 +2,7 @@ const NOT_FOUND = -1;
 
 export interface IChunk {
   offset: number;
-  data: ArrayBuffer;
+  data: Uint8Array;
 }
 
 interface IChunkRange {
@@ -24,7 +24,7 @@ export class ChunkedFileData {
   /**
    * Adds data to the file storage at a specific offset.
    */
-  public addData(offset: number, data: ArrayBuffer): void {
+  public addData(offset: number, data: Uint8Array): void {
 
     const offsetEnd = offset + data.byteLength - 1;
     const chunkRange = this._getChunkRange(offset, offsetEnd);
@@ -105,11 +105,11 @@ export class ChunkedFileData {
     return 0;
   }
 
-  private _concatData(buffer1: ArrayBuffer, buffer2: ArrayBuffer): ArrayBuffer {
-    const tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
+  private _concatData(buffer1: Uint8Array, buffer2: Uint8Array): Buffer {
+    const tmp = new Buffer(buffer1.byteLength + buffer2.byteLength);
     tmp.set(new Uint8Array(buffer1), 0);
     tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
-    return tmp.buffer as any;
+    return tmp;
   }
 
   /**
