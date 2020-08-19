@@ -177,4 +177,15 @@ export class ChunkedFileData {
       endIx: endChunkIx
     };
   }
+
+  public getByteAt(offset: number): number {
+    const buf = Buffer.alloc(1);
+    const bytesRead = this.readToBuffer(buf, 0, offset, 1);
+
+    if (bytesRead < 1) {
+      throw new Error('Offset ' + offset + " hasn't been loaded yet.");
+    }
+
+    return buf[0];
+  }
 }
