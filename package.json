@@ -60,7 +60,7 @@
     "del-cli": "^3.0.1",
     "fs-extra": "^9.0.1",
     "mocha": "^8.2.0",
-    "music-metadata": "^7.4.1",
+    "music-metadata": "^7.5.0",
     "nyc": "^15.1.0",
     "ts-loader": "^8.0.7",
     "ts-node": "^9.0.0",
