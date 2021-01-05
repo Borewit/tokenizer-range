@@ -1621,16 +1621,16 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-music-metadata@^7.6.1:
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/music-metadata/-/music-metadata-7.6.1.tgz#619b538cf394779b534b7d9d8e22759ceb9d7995"
-  integrity sha512-wH594JwxSB8dUGDVx/abku62mT+PWntrhkWuyrp/luGnA7B5VPSbNpdsoXD1bPR/qOVwsYUAGKlpddM5nU0pOA==
+music-metadata@^7.6.2:
+  version "7.6.2"
+  resolved "https://registry.yarnpkg.com/music-metadata/-/music-metadata-7.6.2.tgz#7c46aaa32f37d3f747d653006e24c3f0efd83dc6"
+  integrity sha512-yICd18bxEhphpUPwwzDe8wP3LSsbnKzPjuIDKAYpXgYVkMl2aZxvWx6qA59ccsVC0J5FeEhbRlWiAZ6IFZZYZg==
   dependencies:
     content-type "^1.0.4"
     debug "^4.3.1"
     file-type "^16.1.0"
     media-typer "^1.1.0"
-    strtok3 "^6.0.4"
+    strtok3 "^6.0.6"
     token-types "^2.0.0"
 
 node-environment-flags@1.0.6:
@@ -2262,7 +2262,7 @@ strip-json-comments@2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-strtok3@^6.0.3, strtok3@^6.0.4, strtok3@^6.0.6:
+strtok3@^6.0.3, strtok3@^6.0.6:
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-6.0.6.tgz#65ad16df313c8dfbf075ab0bcb1edd070002fcb3"
   integrity sha512-fVxvAEKDwHFfbQO1yKxKBPfkWZyBr0Zf20UQ/mblbkAQe5h0Xdd2jDb3Mh7yRZd7LSItJ9JWgQWelpEmVoBe2g==
