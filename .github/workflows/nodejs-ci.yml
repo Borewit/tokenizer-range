@@ -1,7 +1,8 @@
 name: Node.js CI
 
 # Triggers the workflow on push or pull request events
-on: [push, pull_request]
+on:
+  - push
 
 jobs:
 
@@ -49,7 +50,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 16.x]
 
     steps:
 
