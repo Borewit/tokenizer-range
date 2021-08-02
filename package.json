@@ -76,7 +76,7 @@
   },
   "dependencies": {
     "debug": "^4.3.2",
-    "strtok3": "^6.2.2"
+    "strtok3": "^6.2.4"
   },
   "nyc": {
     "exclude": [
