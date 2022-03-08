@@ -21,7 +21,7 @@ function getByteAt(chunkedFileData: ChunkedFileData, offset: number): any {
 
 describe('class ChunkedFileData', () => {
   let chunkedFileData;
-  const someData = new Buffer(400);
+  const someData = Buffer.alloc(400);
 
   for (let i = 0; i < someData.byteLength; i++) {
     someData[i] = i;
