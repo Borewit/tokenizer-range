@@ -106,7 +106,7 @@ export class ChunkedFileData {
   }
 
   private _concatData(buffer1: Uint8Array, buffer2: Uint8Array): Buffer {
-    const tmp = new Buffer(buffer1.byteLength + buffer2.byteLength);
+    const tmp = Buffer.alloc(buffer1.byteLength + buffer2.byteLength);
     tmp.set(new Uint8Array(buffer1), 0);
     tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
     return tmp;
