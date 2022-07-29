@@ -75,7 +75,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "debug": "^4.3.2",
+    "debug": "^4.3.4",
     "strtok3": "^6.3.0"
   },
   "nyc": {
