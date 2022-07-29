@@ -54,8 +54,7 @@
     "lint": "tslint 'lib/**/*.ts' --exclude 'lib/**/*.d.ts' 'test/**/*.ts' --exclude 'test/**/*.d.ts'",
     "test": "mocha --require ts-node/register --require source-map-support/register --full-trace test/*.test.ts",
     "test-node": "cd node && yarn install && yarn test-data",
-    "test-coverage": "nyc npm run test",
-    "post-coveralls": "coveralls < coverage/lcov.info"
+    "test-coverage": "nyc npm run test"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",
@@ -63,7 +62,6 @@
     "@types/mocha": "^8.2.0",
     "@types/node": "^18.6.2",
     "chai": "^4.3.4",
-    "coveralls": "^3.1.0",
     "del-cli": "^5.0.0",
     "fs-extra": "^10.1.0",
     "mocha": "^9.2.2",
