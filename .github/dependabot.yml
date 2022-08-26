@@ -19,4 +19,7 @@ updates:
         - "7.x" # Pure ESM module
     - dependency-name: mocha
       versions:
-        - "10.x"
+        - ">=10.x"
+    - dependency-name: music-metadata
+      versions:
+        - ">=10.x"
