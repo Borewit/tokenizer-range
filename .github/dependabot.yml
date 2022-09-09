@@ -22,4 +22,4 @@ updates:
         - ">=10.x"
     - dependency-name: music-metadata
       versions:
-        - ">=10.x"
+        - ">=8.x"
