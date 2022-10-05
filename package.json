@@ -60,7 +60,7 @@
     "@types/chai": "^4.3.3",
     "@types/fs-extra": "^9.0.6",
     "@types/mocha": "^8.2.0",
-    "@types/node": "^18.7.16",
+    "@types/node": "^18.8.2",
     "chai": "^4.3.6",
     "del-cli": "^5.0.0",
     "fs-extra": "^10.1.0",
