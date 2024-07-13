@@ -1,4 +1,4 @@
-![Node.js CI](https://github.com/Borewit/tokenizer-range/workflows/Node.js%20CI/badge.svg)
+[![Node.js CI](https://github.com/Borewit/tokenizer-range/actions/workflows/nodejs-ci.yml/badge.svg?branch=master)](https://github.com/Borewit/tokenizer-range/actions/workflows/nodejs-ci.yml)
 [![NPM version](https://badge.fury.io/js/%40tokenizer%2Frange.svg)](https://badge.fury.io/js/%40tokenizer%2Frange)
 [![npm downloads](http://img.shields.io/npm/dm/@tokenizer/range.svg)](https://npmcharts.com/compare/@tokenizer/range?interval=30)
 [![Known Vulnerabilities](https://snyk.io/test/github/Borewit/tokenizer-range/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Borewit/tokenizer-range?targetFile=package.json)
