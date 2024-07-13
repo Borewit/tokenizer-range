@@ -2,8 +2,6 @@
 [![NPM version](https://badge.fury.io/js/%40tokenizer%2Frange.svg)](https://badge.fury.io/js/%40tokenizer%2Frange)
 [![npm downloads](http://img.shields.io/npm/dm/@tokenizer/range.svg)](https://npmcharts.com/compare/@tokenizer/range?interval=30)
 [![Known Vulnerabilities](https://snyk.io/test/github/Borewit/tokenizer-range/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Borewit/tokenizer-range?targetFile=package.json)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/Borewit/tokenizer-range.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Borewit/tokenizer-range/alerts/)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Borewit/tokenizer-range.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Borewit/tokenizer-range/context:javascript)
 
 # @tokenizer/range
 
