@@ -62,7 +62,7 @@
     "@types/mocha": "^8.2.0",
     "@types/node": "^20.14.10",
     "chai": "^4.3.7",
-    "del-cli": "^5.0.0",
+    "del-cli": "^5.1.0",
     "fs-extra": "^10.1.0",
     "mocha": "^9.2.2",
     "music-metadata": "^7.14.0",
