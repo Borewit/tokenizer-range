@@ -15,7 +15,7 @@ export class FsRangeRequestClient implements IRangeRequestClient {
     const stat = await file.stat(this.fixturePath);
     return {
       size: stat.size,
-      mimeType: this.getContentType(),
+      mimeType: this.getContentType() ?? undefined,
       path: this.fixturePath
     };
   }
@@ -25,13 +25,13 @@ export class FsRangeRequestClient implements IRangeRequestClient {
     range = range ? range : [0, stat.size - 1];
     return {
       size: stat.size,
-      mimeType: this.getContentType(),
+      mimeType: this.getContentType() ?? undefined,
       arrayBuffer: () => this.getData(range),
       path: this.fixturePath
     };
   }
 
-  private async getData(range?: [number, number]): Promise<Uint8Array> {
+  private async getData(range: [number, number]): Promise<Uint8Array> {
     const reqLength = 1 + range[1] - range[0];
 
     const fileHandle = await file.open(this.fixturePath, 'r');

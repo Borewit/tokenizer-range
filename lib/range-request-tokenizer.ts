@@ -58,10 +58,10 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
         position = options.position;
       }
       if (Number.isInteger(options.offset)) {
-        offset = options.offset;
+        offset = options.offset as number;
       }
       if (options.length) {
-        length = options.length;
+        length = options.length as number;
       } else {
         length -= offset;
       }
@@ -73,11 +73,14 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
     debug(`peekBuffer position=${position} length=${length}`);
 
-    const lastPos = Math.min(this.fileInfo.size - 1, position + length - 1);
+    if(!this.fileInfo)
+      throw new Error('File-info missing');
+
+    const lastPos = Math.min(this.fileInfo.size as number - 1, position + length - 1);
 
     return this.loadRange([position, lastPos]).then(() => {
 
-      this._fileData.readToBuffer(uint8array, offset, position, Math.min(this.fileInfo.size, length));
+      this._fileData.readToBuffer(uint8array, offset, position, Math.min(this.fileInfo.size as number, length));
 
       return length;
     });
@@ -89,7 +92,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
    * @return actual number of bytes ignored
    */
   public async ignore(length: number): Promise<number> {
-    const bytesLeft = this.fileInfo.size - this.position;
+    const bytesLeft = this.fileInfo.size as number - this.position;
     if (length <= bytesLeft) {
       this.position += length;
       return length;
@@ -100,7 +103,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
   private async loadRange(range: [number, number]): Promise<void> {
 
-    if (range[0] > this.fileInfo.size - 1) {
+    if (range[0] > ((this.fileInfo.size as number) - 1)) {
       throw new Error('End-Of-File');
     }
 
@@ -119,7 +122,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
     range = roundRange(range, this.minimumChunkSize);
 
     // Upper range should not be greater than max file size
-    range[1] = Math.min(this.fileInfo.size - 1, range[1]);
+    range[1] = Math.min(this.fileInfo.size as number - 1, range[1]);
 
     debug(`blocked range: ${range[0]}..${range[1]}`);
 
@@ -142,21 +145,22 @@ export function roundRange(range: [number, number], minimumChunkSize: number): [
  * Convert HTTP range header value to IContentRangeType
  * @param contentRange - content range
  */
-export function parseContentRange(contentRange?: string): IContentRangeType {
+export function parseContentRange(contentRange: string | null): IContentRangeType {
+  if (!contentRange) {
+    throw new Error('Content range must be provided');
+  }
   debug(`_parseContentRang response: contentRange=${contentRange}`);
 
-  if (contentRange) {
-    const parsedContentRange = contentRange.match(
-      /bytes (\d+)-(\d+)\/(?:(\d+)|\*)/i
-    );
-    if (!parsedContentRange) {
-      throw new Error('FIXME: Unknown Content-Range syntax: ' + contentRange);
-    }
-
-    return {
-      firstBytePosition: parseInt(parsedContentRange[1], 10),
-      lastBytePosition: parseInt(parsedContentRange[2], 10),
-      instanceLength: parsedContentRange[3] ? parseInt(parsedContentRange[3], 10) : null
-    };
+  const parsedContentRange = contentRange.match(
+    /bytes (\d+)-(\d+)\/(?:(\d+)|\*)/i
+  );
+  if (!parsedContentRange) {
+    throw new Error('FIXME: Unknown Content-Range syntax: ' + contentRange);
   }
+
+  return {
+    firstBytePosition: parseInt(parsedContentRange[1], 10),
+    lastBytePosition: parseInt(parsedContentRange[2], 10),
+    instanceLength: parsedContentRange[3] ? parseInt(parsedContentRange[3], 10) : undefined
+  };
 }

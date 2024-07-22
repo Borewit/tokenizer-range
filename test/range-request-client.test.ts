@@ -44,7 +44,8 @@ describe('range-request-client', function() {
       await mm.parseFromTokenizer(tokenizer);
       assert.fail();
     } catch (err) {
-      assert.match(err.message, /application\/pdf/);
+      assert.isDefined((err as Error).message);
+      assert.match((err as Error).message, /application\/pdf/);
     }
   });
 });
