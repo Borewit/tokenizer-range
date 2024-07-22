@@ -4,9 +4,15 @@ import initDebug from 'debug';
 
 const debug = initDebug('range-request-reader');
 
+interface IInternalRangeRequestConfig extends IRangeRequestConfig {
+  avoidHeadRequests: boolean;
+  initialChunkSize: number;
+  minimumChunkSize: number;
+}
+
 export class RangeRequestFactory {
 
-  public config: IRangeRequestConfig = {
+  public config: IInternalRangeRequestConfig = {
     avoidHeadRequests: false,
     initialChunkSize: 4 * 1024,
     minimumChunkSize: 1024
@@ -36,10 +42,12 @@ export class RangeRequestFactory {
   private async fetchFileInfoWithHeadRequest(): Promise<IHeadRequestInfo> {
 
     debug('_fetchSizeWithHeadRequest()');
-    const info = await this.rangeRequestClient.getHeadInfo();
-    if (info.size) {
-      debug(`MIME-type=${info.mimeType}, content-length=${info.size}`);
-      return info;
+    if (this.rangeRequestClient.getHeadInfo) {
+      const info = await this.rangeRequestClient.getHeadInfo();
+      if (info.size) {
+        debug(`MIME-type=${info.mimeType}, content-length=${info.size}`);
+        return info;
+      }
     }
     // Content-Length not provided by the server, fallback to
     // GET requests.
