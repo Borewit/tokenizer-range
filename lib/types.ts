@@ -1,4 +1,4 @@
-import { IFileInfo } from 'strtok3/lib/core';
+import type { IFileInfo } from 'strtok3';
 
 export interface IRangeRequestConfig {
   timeoutInSec?: number;
@@ -33,7 +33,7 @@ export interface IHeadRequestInfo extends IFileInfo {
 }
 
 export interface IRangeRequestResponse extends IHeadRequestInfo {
-  arrayBuffer: () => Promise<Buffer>;
+  arrayBuffer: () => Promise<Uint8Array>;
 }
 
 /**

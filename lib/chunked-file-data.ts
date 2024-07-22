@@ -82,7 +82,7 @@ export class ChunkedFileData {
     return false;
   }
 
-  public readToBuffer(buffer: Buffer, offset: number, position: number, length: number): number {
+  public readToBuffer(buffer: Uint8Array, offset: number, position: number, length: number): number {
 
     const _pos_offset = position ;
     let dataChunk: IChunk;
@@ -95,7 +95,7 @@ export class ChunkedFileData {
         dataChunk = this._fileData[i];
         const chunkOffset = _pos_offset - dataChunkStart;
         let chunkLength = Math.min(length, dataChunk.data.byteLength - chunkOffset);
-        Buffer.from(dataChunk.data).copy(buffer, offset, chunkOffset, chunkOffset + chunkLength);
+        buffer.set(dataChunk.data.subarray(chunkOffset, chunkOffset + chunkLength), offset);
         if (chunkLength < length) {
           chunkLength += this.readToBuffer(buffer, offset + chunkLength, position + chunkLength, length - chunkLength);
         }
@@ -105,8 +105,8 @@ export class ChunkedFileData {
     return 0;
   }
 
-  private _concatData(buffer1: Uint8Array, buffer2: Uint8Array): Buffer {
-    const tmp = Buffer.alloc(buffer1.byteLength + buffer2.byteLength);
+  private _concatData(buffer1: Uint8Array, buffer2: Uint8Array): Uint8Array {
+    const tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
     tmp.set(new Uint8Array(buffer1), 0);
     tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
     return tmp;
@@ -176,16 +176,5 @@ export class ChunkedFileData {
       startIx: startChunkIx,
       endIx: endChunkIx
     };
-  }
-
-  public getByteAt(offset: number): number {
-    const buf = Buffer.alloc(1);
-    const bytesRead = this.readToBuffer(buf, 0, offset, 1);
-
-    if (bytesRead < 1) {
-      throw new Error('Offset ' + offset + " hasn't been loaded yet.");
-    }
-
-    return buf[0];
   }
 }

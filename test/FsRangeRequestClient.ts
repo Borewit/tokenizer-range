@@ -1,7 +1,7 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import * as assert from 'assert';
-import { IHeadRequestInfo, IRangeRequestClient, IRangeRequestResponse } from '../lib/types';
+import * as path from 'node:path';
+import * as assert from 'node:assert';
+import * as file from 'node:fs/promises';
+import { IHeadRequestInfo, IRangeRequestClient, IRangeRequestResponse } from '../lib/types.js';
 
 /**
  * RangeRequest client mockup
@@ -12,7 +12,7 @@ export class FsRangeRequestClient implements IRangeRequestClient {
   }
 
   public async getHeadInfo(): Promise<IHeadRequestInfo> {
-    const stat = await fs.stat(this.fixturePath);
+    const stat = await file.stat(this.fixturePath);
     return {
       size: stat.size,
       mimeType: this.getContentType(),
@@ -21,7 +21,7 @@ export class FsRangeRequestClient implements IRangeRequestClient {
   }
 
   public async getResponse(method: string, range?: [number, number]): Promise<IRangeRequestResponse> {
-    const stat = await fs.stat(this.fixturePath);
+    const stat = await file.stat(this.fixturePath);
     range = range ? range : [0, stat.size - 1];
     return {
       size: stat.size,
@@ -31,17 +31,17 @@ export class FsRangeRequestClient implements IRangeRequestClient {
     };
   }
 
-  private async getData(range?: [number, number]): Promise<Buffer> {
+  private async getData(range?: [number, number]): Promise<Uint8Array> {
     const reqLength = 1 + range[1] - range[0];
 
-    const fd = await fs.open(this.fixturePath, 'r');
+    const fileHandle = await file.open(this.fixturePath, 'r');
     try {
-      const buffer = Buffer.alloc(reqLength);
-      const res = await fs.read(fd, buffer, 0, reqLength, range[0]);
+      const buffer = new Uint8Array(reqLength);
+      const res = await fileHandle.read(buffer, 0, reqLength, range[0]);
       assert.equal(res.bytesRead, reqLength);
       return buffer;
     } finally {
-      await fs.close(fd);
+      await fileHandle.close();
     }
   }
 
