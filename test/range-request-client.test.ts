@@ -1,9 +1,13 @@
 import { assert } from 'chai';
 import * as mm from 'music-metadata';
-import * as path from 'path';
+import * as path from 'node:path';
+import { fileURLToPath } from 'url';
 
-import * as rangeRequestTokenizer from '../lib';
-import { FsRangeRequestClient } from './FsRangeRequestClient';
+import * as rangeRequestTokenizer from '../lib/index.js';
+import { FsRangeRequestClient } from './FsRangeRequestClient.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 describe('range-request-client', function() {
 

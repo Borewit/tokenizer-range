@@ -1,14 +1,13 @@
-import * as initDebug from 'debug';
-import { AbstractTokenizer } from 'strtok3/lib/AbstractTokenizer';
-import { ChunkedFileData } from './chunked-file-data';
-import { IContentRangeType, IHeadRequestInfo, IRangeRequestClient } from './types';
-import { IReadChunkOptions } from 'strtok3/lib/types';
+import { AbstractTokenizer, type IReadChunkOptions } from 'strtok3';
+import { ChunkedFileData } from './chunked-file-data.js';
+import type { IContentRangeType, IHeadRequestInfo, IRangeRequestClient } from './types.js';
+import initDebug from 'debug';
 
 const debug = initDebug('range-request-reader');
 
 /**
  * RangeRequestTokenizer is tokenizer which is an adapter for range-request clients.
- * Typically HTTP clients implementing the HTTP Range Requests (https://tools.ietf.org/html/rfc7233)
+ * Typically, HTTP clients implementing the HTTP Range Requests (https://tools.ietf.org/html/rfc7233)
  *
  * Inspired by "XHR Reader"  written by António Afonso
  * https://github.com/aadsm/jsmediatags/blob/master/src/XhrFileReader.js
@@ -18,7 +17,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
   private _fileData: ChunkedFileData;
 
   constructor(private rangeRequestClient: IRangeRequestClient, fileInfo: IHeadRequestInfo, private minimumChunkSize: number) {
-    super(fileInfo);
+    super({fileInfo});
     if (isNaN(minimumChunkSize)) {
       throw new Error('minimumChunkSize must be a number');
     }
@@ -27,30 +26,30 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
   /**
    * Read portion from stream
-   * @param buffer - Target buffer
+   * @param uint8array - Target `Uint8Array`
    * @param options - Additional read options
    * @returns Promise with number of bytes read
    */
-  public async readBuffer(buffer: Buffer, options?: IReadChunkOptions): Promise<number> {
+  public async readBuffer(uint8array: Uint8Array, options?: IReadChunkOptions): Promise<number> {
 
     if (options && options.position) {
       this.position = options.position;
     }
 
-    const length = await this.peekBuffer(buffer, options);
+    const length = await this.peekBuffer(uint8array, options);
     this.position += length;
     return length;
   }
 
   /**
    * Peek (read ahead) buffer from tokenizer
-   * @param buffer - Target buffer to fill with data peek from the tokenizer-stream
+   * @param uint8array - Target `Uint8Array` to fill with data peek from the tokenizer-stream
    * @param options - Additional read options
    * @returns Promise with number of bytes read
    */
-  public async peekBuffer(buffer: Buffer, options?: IReadChunkOptions): Promise<number> {
+  public async peekBuffer(uint8array: Uint8Array, options?: IReadChunkOptions): Promise<number> {
 
-    let length = buffer.length;
+    let length = uint8array.length;
     let offset = 0;
     let position = this.position;
 
@@ -78,7 +77,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
     return this.loadRange([position, lastPos]).then(() => {
 
-      this._fileData.readToBuffer(buffer, offset, position, Math.min(this.fileInfo.size, length));
+      this._fileData.readToBuffer(uint8array, offset, position, Math.min(this.fileInfo.size, length));
 
       return length;
     });
@@ -109,8 +108,8 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
     debug(`adjusted range ${range[0]}..${range[1]}`);
     if (this._fileData.hasDataRange(range[0], range[1])) {
-      debug(`Read from cache`);
-      return Promise.resolve();
+      debug('Read from cache');
+      return;
     }
 
     // Always download in multiples of CHUNK_SIZE. If we're going to make a
@@ -143,7 +142,7 @@ export function roundRange(range: [number, number], minimumChunkSize: number): [
  * Convert HTTP range header value to IContentRangeType
  * @param contentRange - content range
  */
-export function parseContentRange(contentRange: string): IContentRangeType {
+export function parseContentRange(contentRange?: string): IContentRangeType {
   debug(`_parseContentRang response: contentRange=${contentRange}`);
 
   if (contentRange) {

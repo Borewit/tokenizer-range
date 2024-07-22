@@ -1,6 +1,6 @@
-import { IRangeRequestConfig, IHeadRequestInfo, IRangeRequestClient } from './types';
-import { RangeRequestTokenizer, roundRange } from './range-request-tokenizer';
-import * as initDebug from 'debug';
+import type { IRangeRequestConfig, IHeadRequestInfo, IRangeRequestClient } from './types.js';
+import { RangeRequestTokenizer, roundRange } from './range-request-tokenizer.js';
+import initDebug from 'debug';
 
 const debug = initDebug('range-request-reader');
 
@@ -35,7 +35,7 @@ export class RangeRequestFactory {
 
   private async fetchFileInfoWithHeadRequest(): Promise<IHeadRequestInfo> {
 
-    debug(`_fetchSizeWithHeadRequest()`);
+    debug('_fetchSizeWithHeadRequest()');
     const info = await this.rangeRequestClient.getHeadInfo();
     if (info.size) {
       debug(`MIME-type=${info.mimeType}, content-length=${info.size}`);

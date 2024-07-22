@@ -2,32 +2,32 @@
  * Code based on: https://github.com/aadsm/jsmediatags/blob/386dc72f6fc96d15138c408956ca501e1b174fbd/src/__tests__/ChunkedFileData-test.js
  */
 
-import { ChunkedFileData } from '../lib/chunked-file-data';
+import { ChunkedFileData } from '../lib/chunked-file-data.js';
 import { expect } from 'chai';
 
 const NOT_FOUND = -1;
 
 
 function getByteAt(chunkedFileData: ChunkedFileData, offset: number): any {
-  const buf = Buffer.alloc(1);
+  const buf = new Uint8Array(1);
   const bytesRead = chunkedFileData.readToBuffer(buf, 0, offset, 1);
 
   if (bytesRead < 1) {
-    throw new Error('Offset ' + offset + " hasn't been loaded yet.");
+    throw new Error(`Offset ${offset} hasn't been loaded yet.`);
   }
 
   return buf[0];
 }
 
 describe('class ChunkedFileData', () => {
-  let chunkedFileData;
-  const someData = Buffer.alloc(400);
+  let chunkedFileData: any; // ToDo: currently required to access `._fileData`
+  const someData = new Uint8Array(400);
 
   for (let i = 0; i < someData.byteLength; i++) {
     someData[i] = i;
   }
 
-  function sliceData(offset, length) {
+  function sliceData(offset: number, length: number) {
     return someData.slice(offset, offset + length);
   }
 
@@ -365,7 +365,7 @@ describe('class ChunkedFileData', () => {
   });
 
   it('should add TypedArrays', () => {
-    const intArray = new Uint8Array(Buffer.from([0x01, 0x02, 0x03, 0x04, 0x05]));
+    const intArray = new Uint8Array([0x01, 0x02, 0x03, 0x04, 0x05]);
     chunkedFileData.addData(5, intArray);
 
     expect(() => {
