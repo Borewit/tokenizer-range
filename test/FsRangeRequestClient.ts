@@ -16,6 +16,7 @@ export class FsRangeRequestClient implements IRangeRequestClient {
     return {
       size: stat.size,
       mimeType: this.getContentType() ?? undefined,
+      acceptPartialRequests: true,
       path: this.fixturePath
     };
   }
@@ -27,6 +28,7 @@ export class FsRangeRequestClient implements IRangeRequestClient {
       size: stat.size,
       mimeType: this.getContentType() ?? undefined,
       arrayBuffer: () => this.getData(range),
+      acceptPartialRequests: true,
       path: this.fixturePath
     };
   }
