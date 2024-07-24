@@ -27,12 +27,15 @@ export interface IContentRangeType {
  */
 export interface IHeadRequestInfo extends IFileInfo {
   /**
-   * Range and file size specification
+   * Accept partial requests
    */
-  contentRange?: IContentRangeType;
+  acceptPartialRequests: boolean;
 }
 
 export interface IRangeRequestResponse extends IHeadRequestInfo {
+
+  contentRange?: IContentRangeType;
+
   arrayBuffer: () => Promise<Uint8Array>;
 }
 

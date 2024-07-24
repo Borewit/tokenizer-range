@@ -26,6 +26,9 @@ export class RangeRequestFactory {
       this.config = {...this.config, ...config};
     }
     const headRequestInfo = await this.getHeadRequestInfo();
+    if (!headRequestInfo.acceptPartialRequests) {
+      throw new Error('Server does not accept partial requests');
+    }
     return new RangeRequestTokenizer(this.rangeRequestClient, headRequestInfo, this.config.minimumChunkSize);
   }
 
@@ -45,7 +48,7 @@ export class RangeRequestFactory {
     if (this.rangeRequestClient.getHeadInfo) {
       const info = await this.rangeRequestClient.getHeadInfo();
       if (info.size) {
-        debug(`MIME-type=${info.mimeType}, content-length=${info.size}`);
+        debug(`MIME-type=${info.mimeType}, content-length=${info.size}, accept-partial-requests=${info.acceptPartialRequests}`);
         return info;
       }
     }
