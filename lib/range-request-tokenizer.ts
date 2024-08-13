@@ -145,11 +145,11 @@ export function roundRange(range: [number, number], minimumChunkSize: number): [
  * Convert HTTP range header value to IContentRangeType
  * @param contentRange - content range
  */
-export function parseContentRange(contentRange: string | null): IContentRangeType {
+export function parseContentRange(contentRange: string): IContentRangeType {
   if (!contentRange) {
     throw new Error('Content range must be provided');
   }
-  debug(`_parseContentRang response: contentRange=${contentRange}`);
+  debug(`parseContentRange response: contentRange=${contentRange}`);
 
   const parsedContentRange = contentRange.match(
     /bytes (\d+)-(\d+)\/(?:(\d+)|\*)/i
