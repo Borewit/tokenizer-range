@@ -16,7 +16,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
   private _fileData: ChunkedFileData;
 
-  constructor(private rangeRequestClient: IRangeRequestClient, fileInfo: IHeadRequestInfo, private minimumChunkSize: number) {
+  constructor(private rangeRequestClient: IRangeRequestClient, fileInfo: IHeadRequestInfo, private minimumChunkSize: number, private abortController?: AbortController) {
     super({fileInfo});
     if (isNaN(minimumChunkSize)) {
       throw new Error('minimumChunkSize must be a number');
@@ -99,6 +99,10 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
     }
     this.position += bytesLeft;
     return bytesLeft;
+  }
+
+  public async abort(): Promise<void> {
+    this.abortController?.abort();
   }
 
   private async loadRange(range: [number, number]): Promise<void> {
