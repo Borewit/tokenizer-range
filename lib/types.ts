@@ -1,6 +1,7 @@
 import type { IFileInfo } from 'strtok3';
 
 export interface IRangeRequestConfig {
+  abortController?: AbortController;
   timeoutInSec?: number;
   avoidHeadRequests?: boolean;
   initialChunkSize?: number;

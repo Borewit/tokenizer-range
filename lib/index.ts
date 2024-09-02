@@ -7,6 +7,7 @@ export { parseContentRange } from './range-request-tokenizer.js';
 /**
  * Construct range-tokenizer from range-request-client and config
  * @param rangeRequestClient - HTTP range request client
+ * @param abortController - AbortController
  * @param config - Configuration
  * @return Tokenizer
  */

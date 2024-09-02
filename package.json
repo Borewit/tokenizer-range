@@ -85,7 +85,7 @@
   },
   "dependencies": {
     "debug": "^4.3.5",
-    "strtok3": "^8.0.1"
+    "strtok3": "^9.0.0"
   },
   "packageManager": "yarn@4.3.1"
 }
