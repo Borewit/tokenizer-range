@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import * as assert from 'node:assert';
 import * as file from 'node:fs/promises';
-import { IHeadRequestInfo, IRangeRequestClient, IRangeRequestResponse } from '../lib/types.js';
+import type { IHeadRequestInfo, IRangeRequestClient, IRangeRequestResponse } from '../lib/types.js';
 
 /**
  * RangeRequest client mockup

@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import * as mm from 'music-metadata';
 import * as path from 'node:path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 
 import * as rangeRequestTokenizer from '../lib/index.js';
 import { FsRangeRequestClient } from './FsRangeRequestClient.js';

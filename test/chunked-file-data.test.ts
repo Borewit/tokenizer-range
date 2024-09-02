@@ -2,13 +2,13 @@
  * Code based on: https://github.com/aadsm/jsmediatags/blob/386dc72f6fc96d15138c408956ca501e1b174fbd/src/__tests__/ChunkedFileData-test.js
  */
 
-import { ChunkedFileData } from '../lib/chunked-file-data.js';
+import { ChunkedFileData, type IChunk, type IChunkRange } from '../lib/chunked-file-data.js';
 import { expect } from 'chai';
 
 const NOT_FOUND = -1;
 
 
-function getByteAt(chunkedFileData: ChunkedFileData, offset: number): any {
+function getByteAt(chunkedFileData: ChunkedFileData | PublicChunkedFileData, offset: number): number {
   const buf = new Uint8Array(1);
   const bytesRead = chunkedFileData.readToBuffer(buf, 0, offset, 1);
 
@@ -19,8 +19,17 @@ function getByteAt(chunkedFileData: ChunkedFileData, offset: number): any {
   return buf[0];
 }
 
+interface PublicChunkedFileData {
+  _fileData: IChunk[];
+  addData(offset: number, data: Uint8Array): void;
+  hasDataRange(offsetStart: number, offsetEnd: number): boolean;
+  readToBuffer(buffer: Uint8Array, offset: number, position: number, length: number): number;
+  _concatData(buffer1: Uint8Array, buffer2: Uint8Array): Uint8Array;
+  _getChunkRange(offsetStart: number, offsetEnd: number): IChunkRange;
+}
+
 describe('class ChunkedFileData', () => {
-  let chunkedFileData: any; // ToDo: currently required to access `._fileData`
+  let chunkedFileData: PublicChunkedFileData; // ToDo: currently required to access `._fileData`
   const someData = new Uint8Array(400);
 
   for (let i = 0; i < someData.byteLength; i++) {
@@ -32,7 +41,7 @@ describe('class ChunkedFileData', () => {
   }
 
   beforeEach(() => {
-    chunkedFileData = new ChunkedFileData();
+    chunkedFileData = new ChunkedFileData() as unknown as PublicChunkedFileData;
   });
 
   describe('adding data', () => {
@@ -207,7 +216,7 @@ describe('class ChunkedFileData', () => {
     });
 
     it('should find no range when no chunks exist', () => {
-      chunkedFileData = new ChunkedFileData();
+      chunkedFileData = new ChunkedFileData() as unknown as PublicChunkedFileData;
 
       const range = chunkedFileData._getChunkRange(100, 200);
       expect(range.startIx).equals(NOT_FOUND, 'startIx');

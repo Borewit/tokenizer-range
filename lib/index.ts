@@ -1,6 +1,6 @@
 import type { IRangeRequestClient, IRangeRequestConfig } from './types.js';
 import { RangeRequestFactory } from './range-request-factory.js';
-import { type ITokenizer } from 'strtok3';
+import type { ITokenizer } from 'strtok3';
 export type { IRangeRequestClient, IRangeRequestResponse, IContentRangeType, IHeadRequestInfo, IRangeRequestConfig } from './types.js';
 export { parseContentRange } from './range-request-tokenizer.js';
 
