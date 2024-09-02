@@ -5,7 +5,7 @@ export interface IChunk {
   data: Uint8Array;
 }
 
-interface IChunkRange {
+export interface IChunkRange {
   startIx: number;
   endIx: number;
   insertIx?: number

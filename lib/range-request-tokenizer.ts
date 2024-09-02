@@ -18,7 +18,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
   constructor(private rangeRequestClient: IRangeRequestClient, fileInfo: IHeadRequestInfo, private minimumChunkSize: number, private abortController?: AbortController) {
     super({fileInfo});
-    if (isNaN(minimumChunkSize)) {
+    if (Number.isNaN(minimumChunkSize)) {
       throw new Error('minimumChunkSize must be a number');
     }
     this._fileData = new ChunkedFileData();
@@ -32,7 +32,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
    */
   public async readBuffer(uint8array: Uint8Array, options?: IReadChunkOptions): Promise<number> {
 
-    if (options && options.position) {
+    if (options?.position) {
       this.position = options.position;
     }
 
@@ -159,12 +159,12 @@ export function parseContentRange(contentRange: string): IContentRangeType {
     /bytes (\d+)-(\d+)\/(?:(\d+)|\*)/i
   );
   if (!parsedContentRange) {
-    throw new Error('FIXME: Unknown Content-Range syntax: ' + contentRange);
+    throw new Error(`FIXME: Unknown Content-Range syntax: ${contentRange}`);
   }
 
   return {
-    firstBytePosition: parseInt(parsedContentRange[1], 10),
-    lastBytePosition: parseInt(parsedContentRange[2], 10),
-    instanceLength: parsedContentRange[3] ? parseInt(parsedContentRange[3], 10) : undefined
+    firstBytePosition: Number.parseInt(parsedContentRange[1], 10),
+    lastBytePosition: Number.parseInt(parsedContentRange[2], 10),
+    instanceLength: parsedContentRange[3] ? Number.parseInt(parsedContentRange[3], 10) : undefined
   };
 }
