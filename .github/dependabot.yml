@@ -10,3 +10,8 @@ updates:
   - dependencies
   target-branch: master
   versioning-strategy: increase
+  groups:
+    types:
+      dependency-type: "development"
+      patterns:
+        - "@types/*"
