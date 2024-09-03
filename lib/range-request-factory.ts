@@ -29,7 +29,11 @@ export class RangeRequestFactory {
     if (!headRequestInfo.acceptPartialRequests) {
       throw new Error('Server does not accept partial requests');
     }
-    return new RangeRequestTokenizer(this.rangeRequestClient, headRequestInfo, this.config.minimumChunkSize);
+    return new RangeRequestTokenizer(this.rangeRequestClient, {
+      fileInfo: headRequestInfo,
+      minimumChunkSize: this.config.minimumChunkSize,
+      abortSignal: config?.abortSignal
+    });
   }
 
   /**
