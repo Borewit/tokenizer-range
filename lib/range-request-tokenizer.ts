@@ -5,6 +5,12 @@ import initDebug from 'debug';
 
 const debug = initDebug('range-request-reader');
 
+interface IRangeRequestTokenizerOptions {
+  fileInfo: IHeadRequestInfo;
+  minimumChunkSize: number;
+  abortSignal?: AbortSignal
+}
+
 /**
  * RangeRequestTokenizer is tokenizer which is an adapter for range-request clients.
  * Typically, HTTP clients implementing the HTTP Range Requests (https://tools.ietf.org/html/rfc7233)
@@ -16,12 +22,15 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
 
   private _fileData: ChunkedFileData;
 
-  constructor(private rangeRequestClient: IRangeRequestClient, fileInfo: IHeadRequestInfo, private minimumChunkSize: number, private abortController?: AbortController) {
-    super({fileInfo});
-    if (Number.isNaN(minimumChunkSize)) {
+  constructor(private rangeRequestClient: IRangeRequestClient, private options: IRangeRequestTokenizerOptions) {
+    super({fileInfo: options.fileInfo});
+    if (Number.isNaN(options.minimumChunkSize)) {
       throw new Error('minimumChunkSize must be a number');
     }
     this._fileData = new ChunkedFileData();
+    this.options.abortSignal?.addEventListener('abort', () => {
+      this.abort();
+    });
   }
 
   /**
@@ -102,7 +111,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
   }
 
   public async abort(): Promise<void> {
-    this.abortController?.abort();
+    this.rangeRequestClient.abort();
   }
 
   private async loadRange(range: [number, number]): Promise<void> {
@@ -123,7 +132,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
     // request might as well get a chunk that makes sense. The big cost is
     // establishing the connection so getting 10bytes or 1K doesn't really
     // make a difference.
-    range = roundRange(range, this.minimumChunkSize);
+    range = roundRange(range, this.options.minimumChunkSize);
 
     // Upper range should not be greater than max file size
     range[1] = Math.min(this.fileInfo.size as number - 1, range[1]);

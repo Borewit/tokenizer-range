@@ -1,7 +1,7 @@
 import type { IFileInfo } from 'strtok3';
 
 export interface IRangeRequestConfig {
-  abortController?: AbortController;
+  abortSignal?: AbortSignal;
   timeoutInSec?: number;
   avoidHeadRequests?: boolean;
   initialChunkSize?: number;
@@ -58,4 +58,9 @@ export interface IRangeRequestClient {
    * @return Range request response
    */
   getResponse(method: string, range?: [number, number]): Promise<IRangeRequestResponse>;
+
+  /**
+   * Abort pending asynchronous operations
+   */
+  abort(): void;
 }

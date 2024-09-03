@@ -57,4 +57,8 @@ export class FsRangeRequestClient implements IRangeRequestClient {
     }
   }
 
+  abort(): void {
+    // Abort not implemented
+  }
+
 }
