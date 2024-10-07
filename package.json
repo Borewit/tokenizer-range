@@ -60,7 +60,7 @@
     "send-codacy": "c8 report --reporter=text-lcov | codacy-coverage"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
+    "@biomejs/biome": "^1.9.3",
     "@types/chai": "^4.3.19",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.7",
