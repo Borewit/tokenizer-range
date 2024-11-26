@@ -1,6 +1,6 @@
 import type { IRangeRequestClient, IRangeRequestConfig } from './types.js';
 import { RangeRequestFactory } from './range-request-factory.js';
-import type { ITokenizer } from 'strtok3';
+import type { IRandomAccessTokenizer } from 'strtok3';
 export type { IRangeRequestClient, IRangeRequestResponse, IContentRangeType, IHeadRequestInfo, IRangeRequestConfig } from './types.js';
 export { parseContentRange } from './range-request-tokenizer.js';
 
@@ -11,7 +11,7 @@ export { parseContentRange } from './range-request-tokenizer.js';
  * @param config - Configuration
  * @return Tokenizer
  */
-export function tokenizer(rangeRequestClient: IRangeRequestClient, config?: IRangeRequestConfig): Promise<ITokenizer> {
+export function tokenizer(rangeRequestClient: IRangeRequestClient, config?: IRangeRequestConfig): Promise<IRandomAccessTokenizer> {
   const factory = new RangeRequestFactory(rangeRequestClient);
   return factory.initTokenizer(config);
 }
