@@ -1,4 +1,4 @@
-import { AbstractTokenizer, type IReadChunkOptions } from 'strtok3';
+import { AbstractTokenizer, type IRandomAccessTokenizer, type IReadChunkOptions, type IRandomAccessFileInfo } from 'strtok3';
 import { ChunkedFileData } from './chunked-file-data.js';
 import type { IContentRangeType, IHeadRequestInfo, IRangeRequestClient } from './types.js';
 import initDebug from 'debug';
@@ -18,12 +18,15 @@ interface IRangeRequestTokenizerOptions {
  * Inspired by "XHR Reader"  written by António Afonso
  * https://github.com/aadsm/jsmediatags/blob/master/src/XhrFileReader.js
  */
-export class RangeRequestTokenizer extends AbstractTokenizer {
+export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomAccessTokenizer {
 
   private _fileData: ChunkedFileData;
 
+  public readonly fileInfo: IRandomAccessFileInfo;
+
   constructor(private rangeRequestClient: IRangeRequestClient, private options: IRangeRequestTokenizerOptions) {
     super({fileInfo: options.fileInfo});
+    this.fileInfo = options.fileInfo;
     if (Number.isNaN(options.minimumChunkSize)) {
       throw new Error('minimumChunkSize must be a number');
     }
@@ -31,6 +34,10 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
     this.options.abortSignal?.addEventListener('abort', () => {
       this.abort();
     });
+  }
+
+  setPosition(position: number): void {
+        this.position = position;
   }
 
   /**
@@ -144,6 +151,10 @@ export class RangeRequestTokenizer extends AbstractTokenizer {
         this._fileData.addData(range[0], data);
       });
     });
+  }
+
+  supportsRandomAccess(): boolean {
+    return false;
   }
 }
 

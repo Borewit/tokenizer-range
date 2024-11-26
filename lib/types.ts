@@ -1,4 +1,4 @@
-import type { IFileInfo } from 'strtok3';
+import type { IRandomAccessFileInfo } from 'strtok3';
 
 export interface IRangeRequestConfig {
   abortSignal?: AbortSignal;
@@ -26,7 +26,7 @@ export interface IContentRangeType {
 /**
  * Abstract interface to HTTP response information
  */
-export interface IHeadRequestInfo extends IFileInfo {
+export interface IHeadRequestInfo extends IRandomAccessFileInfo {
   /**
    * Accept partial requests
    */
