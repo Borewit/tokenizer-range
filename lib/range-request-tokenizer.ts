@@ -121,6 +121,10 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
     this.rangeRequestClient.abort();
   }
 
+  supportsRandomAccess(): boolean {
+    return true;
+  }
+
   private async loadRange(range: [number, number]): Promise<void> {
 
     if (range[0] > ((this.fileInfo.size as number) - 1)) {
@@ -151,10 +155,6 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
         this._fileData.addData(range[0], data);
       });
     });
-  }
-
-  supportsRandomAccess(): boolean {
-    return false;
   }
 }
 

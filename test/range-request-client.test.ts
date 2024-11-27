@@ -64,6 +64,9 @@ describe('range-request-client', function() {
     const textDecoder = new TextDecoder('utf-8');
 
     try {
+      assert.strictEqual(tokenizer.position, 0, 'tokenizer.position');
+      assert.isTrue(tokenizer.supportsRandomAccess());
+      // Read ID3v1 header at the end of the file
       const id3v1HeaderSize = 128;
       const id3v1Header = new Uint8Array(id3v1HeaderSize);
       await tokenizer.readBuffer(id3v1Header,{position: tokenizer.fileInfo.size - id3v1HeaderSize});
@@ -73,6 +76,7 @@ describe('range-request-client', function() {
       tokenizer.setPosition(0);
       assert.strictEqual(tokenizer.position, 0, 'Tokenizer position should be at the beginning of the file');
 
+      // Read ID3v2 header at the beginning of the file
       const id3v2Header = new Uint8Array(3);
       await tokenizer.readBuffer(id3v2Header);
       const id3v2Tag = textDecoder.decode(id3v2Header);

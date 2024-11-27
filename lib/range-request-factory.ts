@@ -66,7 +66,7 @@ export class RangeRequestFactory {
     const range = roundRange([0, this.config.initialChunkSize], this.config.minimumChunkSize);
 
     const response = await this.rangeRequestClient.getResponse('GET', range);
-    debug(`_fetchSizeWithGetRequest response: contentRange=${response.contentRange}`);
+    debug(`_fetchSizeWithGetRequest response: contentRange=[${response.contentRange?.firstBytePosition}-${response.contentRange?.lastBytePosition}/${response.contentRange?.instanceLength}]`);
 
     if (!response.contentRange) {
       throw new Error('Failed to resolve content range (file size)');
