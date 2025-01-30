@@ -266,7 +266,7 @@ __metadata:
     del-cli: "npm:^6.0.0"
     global: "npm:^4.4.0"
     mocha: "npm:^11.0.1"
-    music-metadata: "npm:^10.6.0"
+    music-metadata: "npm:^10.8.1"
     strtok3: "npm:^9.1.1"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.2"
@@ -707,18 +707,6 @@ __metadata:
     supports-color:
       optional: true
   checksum: 10c0/082c375a2bdc4f4469c99f325ff458adad62a3fc2c482d59923c260cb08152f34e2659f72b3767db8bb2f21ca81a60a42d1019605a412132d7b9f59363a005cc
-  languageName: node
-  linkType: hard
-
-"debug@npm:^4.3.7":
-  version: 4.3.7
-  resolution: "debug@npm:4.3.7"
-  dependencies:
-    ms: "npm:^2.1.3"
-  peerDependenciesMeta:
-    supports-color:
-      optional: true
-  checksum: 10c0/1471db19c3b06d485a622d62f65947a19a23fbd0dd73f7fd3eafb697eec5360cde447fb075919987899b1a2096e85d35d4eb5a4de09a57600ac9cf7e6c8e768b
   languageName: node
   linkType: hard
 
@@ -1321,6 +1309,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"link@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "link@npm:2.1.1"
+  bin:
+    link: dist/cli.js
+  checksum: 10c0/2ab956715e77c4fb9d78e16172301b59e2c03611feae4df33f50a70351445da050bea4010c682a0e187a09b5f2ee4462bab842153c2767a3b018de00b0e8282a
+  languageName: node
+  linkType: hard
+
 "locate-path@npm:^6.0.0":
   version: 6.0.0
   resolution: "locate-path@npm:6.0.0"
@@ -1597,19 +1594,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"music-metadata@npm:^10.6.0":
-  version: 10.6.0
-  resolution: "music-metadata@npm:10.6.0"
+"music-metadata@npm:^10.8.1":
+  version: 10.8.1
+  resolution: "music-metadata@npm:10.8.1"
   dependencies:
     "@tokenizer/token": "npm:^0.3.0"
     content-type: "npm:^1.0.5"
-    debug: "npm:^4.3.7"
+    debug: "npm:^4.4.0"
     file-type: "npm:^19.6.0"
+    link: "npm:^2.1.1"
     media-typer: "npm:^1.1.0"
-    strtok3: "npm:^9.0.1"
+    strtok3: "npm:^10.1.2"
     token-types: "npm:^6.0.0"
     uint8array-extras: "npm:^1.4.0"
-  checksum: 10c0/2820ff34114246bd56f85e638f0cac26e49d7a460f2bf150b23f9b001484ed18814ff7d7f1cb38b410ea5fb94dac75b46f7fc817e3a03336731423740b9c1f40
+  checksum: 10c0/7ec33d1a730476a080826d0f7696596c9a4d938afc9cb7e84922f83a4f9aa20ca4bd04f647c422da343e2795f88cdb712d77c78fb04145f9fff86593db3c994f
   languageName: node
   linkType: hard
 
@@ -1741,6 +1739,13 @@ __metadata:
   version: 5.3.1
   resolution: "peek-readable@npm:5.3.1"
   checksum: 10c0/49f628e4728887230c158699e422ebb10747f5e02aee930ec10634fa7142e74e67d3fb3a780e7a9b9f092c61bf185f07d167c099b2359b22a58cee3dbfe0e43b
+  languageName: node
+  linkType: hard
+
+"peek-readable@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "peek-readable@npm:6.0.2"
+  checksum: 10c0/1ea609773ce86371dbfe1aa969da5090e6c19ef997216633f8d0c4530647f4d518e40e7d9a1ca0d358af7df91343b96d1bc4daa0e792bb12a1dfcdd1e8774a24
   languageName: node
   linkType: hard
 
@@ -2016,6 +2021,16 @@ __metadata:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 10c0/9681a6257b925a7fa0f285851c0e613cc934a50661fa7bb41ca9cbbff89686bb4a0ee366e6ecedc4daafd01e83eee0720111ab294366fe7c185e935475ebcecd
+  languageName: node
+  linkType: hard
+
+"strtok3@npm:^10.1.2":
+  version: 10.1.2
+  resolution: "strtok3@npm:10.1.2"
+  dependencies:
+    "@tokenizer/token": "npm:^0.3.0"
+    peek-readable: "npm:^6.0.2"
+  checksum: 10c0/f754131361637c74f14d832b9dfe6ad9e66de1e37343ada01a050bbf4287670e7c3962e1fb4d32a0c4ed06222ab9e0c9021bb981cf6440c676d723d0d20dbcf6
   languageName: node
   linkType: hard
 
