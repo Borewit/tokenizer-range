@@ -66,15 +66,12 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
   public async peekBuffer(uint8array: Uint8Array, options?: IReadChunkOptions): Promise<number> {
 
     let length = uint8array.length;
-    let offset = 0;
+    const offset = 0;
     let position = this.position;
 
     if (options) {
       if (options.position) {
         position = options.position;
-      }
-      if (Number.isInteger(options.offset)) {
-        offset = options.offset as number;
       }
       if (options.length) {
         length = options.length as number;
@@ -94,12 +91,11 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
 
     const lastPos = Math.min(this.fileInfo.size as number - 1, position + length - 1);
 
-    return this.loadRange([position, lastPos]).then(() => {
+    await this.loadRange([position, lastPos]);
 
-      this._fileData.readToBuffer(uint8array, offset, position, Math.min(this.fileInfo.size as number, length));
+    this._fileData.readToBuffer(uint8array, offset, position, Math.min(this.fileInfo.size as number, length));
 
-      return length;
-    });
+    return length;
   }
 
   /**
