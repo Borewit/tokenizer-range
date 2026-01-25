@@ -75,7 +75,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "debug": "^4.4.0",
+    "debug": "^4.4.3",
     "strtok3": "^10.3.4"
   },
   "packageManager": "yarn@4.6.0"
