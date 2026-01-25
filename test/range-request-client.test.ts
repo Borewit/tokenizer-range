@@ -9,6 +9,12 @@ import { FsRangeRequestClient } from './FsRangeRequestClient.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+type RangeTuple = [number, number];
+
+type TokenizerWithLoadRange = {
+  loadRange(range: RangeTuple): Promise<void>;
+};
+
 describe('range-request-client', function() {
 
   this.timeout(10 * 1000);
@@ -86,4 +92,37 @@ describe('range-request-client', function() {
     }
 
   });
+
+  it('RangeRequestTokenizer.peekBuffer should not call loadRange with inverted range when mayBeLess is true', async () => {
+    const fixturePath = path.join(__dirname, 'fixture', '02 - Poxfil - Solid Ground.mp3');
+    const rangeRequestClient = new FsRangeRequestClient(fixturePath);
+    const tokenizer = await rangeRequestTokenizer.tokenizer(rangeRequestClient, config);
+
+    try {
+      const size = tokenizer.fileInfo.size as number;
+
+      const seen: RangeTuple[] = [];
+
+      const t = tokenizer as unknown as TokenizerWithLoadRange;
+
+      const originalLoadRange = t.loadRange.bind(tokenizer);
+
+      t.loadRange = async (range: RangeTuple) => {
+        seen.push(range);
+        return originalLoadRange(range);
+      };
+
+      const buf = new Uint8Array(1024);
+      const bytesRead = await tokenizer.peekBuffer(buf, { position: size + 10, mayBeLess: true });
+
+      assert.strictEqual(bytesRead, 0);
+
+      for (const [start, end] of seen) {
+        assert.isAtMost(start, end, `loadRange called with invalid range: [${start}, ${end}]`);
+      }
+    } finally {
+      await tokenizer.close();
+    }
+  });
+
 });
