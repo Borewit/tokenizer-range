@@ -64,36 +64,34 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
    * @returns Promise with number of bytes read
    */
   public async peekBuffer(uint8array: Uint8Array, options?: IReadChunkOptions): Promise<number> {
-
-    let length = uint8array.length;
     const offset = 0;
-    let position = this.position;
 
-    if (options) {
-      if (options.position) {
-        position = options.position;
-      }
-      if (options.length) {
-        length = options.length as number;
-      } else {
-        length -= offset;
-      }
+    if (!this.fileInfo) throw new Error('File-info missing');
+    const size = this.fileInfo.size as number;
+
+    const position = options?.position !== undefined ? options.position : this.position;
+
+    // requested length
+    const requested = options?.length !== undefined ? (options.length as number) : (uint8array.length - offset);
+    if (requested <= 0) return 0;
+
+    const available = size - position;
+
+    // Past EOF
+    if (available <= 0) {
+      if (options?.mayBeLess) return 0;
+      throw new RangeError(`peekBuffer position ${position} is beyond EOF ${size}`);
     }
 
-    if (length === 0) {
-      return 0;
+    const length = options?.mayBeLess ? Math.min(requested, available) : requested;
+    if (!options?.mayBeLess && length > available) {
+      throw new RangeError(`peekBuffer length ${length} exceeds remaining ${available} at position ${position}`);
     }
 
-    debug(`peekBuffer position=${position} length=${length}`);
-
-    if(!this.fileInfo)
-      throw new Error('File-info missing');
-
-    const lastPos = Math.min(this.fileInfo.size as number - 1, position + length - 1);
+    const lastPos = position + length - 1;
 
     await this.loadRange([position, lastPos]);
-
-    this._fileData.readToBuffer(uint8array, offset, position, Math.min(this.fileInfo.size as number, length));
+    this._fileData.readToBuffer(uint8array, offset, position, length);
 
     return length;
   }
@@ -123,11 +121,11 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
 
   private async loadRange(range: [number, number]): Promise<void> {
 
+    debug(`request range ${range[0]}..${range[1]}`);
+
     if (range[0] > ((this.fileInfo.size as number) - 1)) {
       throw new Error('End-Of-File');
     }
-
-    debug(`request range ${range[0]}..${range[1]}`);
 
     debug(`adjusted range ${range[0]}..${range[1]}`);
     if (this._fileData.hasDataRange(range[0], range[1])) {
