@@ -267,7 +267,7 @@ __metadata:
     global: "npm:^4.4.0"
     mocha: "npm:^11.1.0"
     music-metadata: "npm:^10.9.0"
-    strtok3: "npm:^10.2.1"
+    strtok3: "npm:^10.3.4"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.3"
   languageName: unknown
@@ -2020,6 +2020,15 @@ __metadata:
     "@tokenizer/token": "npm:^0.3.0"
     peek-readable: "npm:^6.1.1"
   checksum: 10c0/864d88358c1cbca5c1a4538e74189ea89e0ed89d46cafe82178a2bb8b2bf22d5882da711fe73e9eaacad9cf1a3f875aa5a666900f3b0af6a7f5d8d94b211af1f
+  languageName: node
+  linkType: hard
+
+"strtok3@npm:^10.3.4":
+  version: 10.3.4
+  resolution: "strtok3@npm:10.3.4"
+  dependencies:
+    "@tokenizer/token": "npm:^0.3.0"
+  checksum: 10c0/277ab69e417f4545e364ffaf9d560c991f531045dbace32d77b5c822cccd76a608b782785a2c60595274288d4d32dced184a5c21dc20348791da697127dc69a8
   languageName: node
   linkType: hard
 
