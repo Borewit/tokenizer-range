@@ -13,7 +13,12 @@ It is an **abstract** module which implements the range request mechanism which 
 * [@tokenizer/s3](https://github.com/Borewit/tokenizer-s3): An Amazon S3 client
 
 ## Compatibility
-This module can be used both in the browser and in [Node.js](https://nodejs.org).
+This module can be used both in the browser and in [Node.js](https://nodejs.org) 18 or later.
+The Node.js minimum matches the existing `strtok3` dependency; Node.js 16 is no longer advertised.
+
+Development installs and builds use Node.js 24 and the Yarn version pinned in `package.json`.
+Run `corepack enable yarn`, `yarn install --immutable`, then `yarn build` before `yarn test` or `yarn test-coverage`.
+Tests execute the compiled JavaScript without a TypeScript loader. CI runs them on Node.js 18, 20, 22 and 24.
 
 ## Installation
 

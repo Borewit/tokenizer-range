@@ -1,7 +1,12 @@
 {
-  "extension": ["ts", "tsx"],
-  "watch-files": ["lib/**/*.ts", "test/**/*.ts"],
-  "spec": ["test/*.ts"],
-  "loader": ["ts-node/esm"],
-  "extensions": ["ts", "tsx"]
+  "extension": [
+    "js"
+  ],
+  "watch-files": [
+    "lib/**/*.js",
+    "test/**/*.js"
+  ],
+  "spec": [
+    "test/*.test.js"
+  ]
 }
