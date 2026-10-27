@@ -32,7 +32,7 @@ jobs:
       - name: Lint and formatting check
         run: yarn run lint
 
-      - name: Build
+      - name: Build with source maps
         run: yarn run build
 
       - name: Upload build
@@ -85,21 +85,48 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Test compiled JavaScript with Node.js ${{ matrix.node-version }}
-        run: node node_modules/c8/bin/c8.js node node_modules/mocha/bin/mocha.js
+        run: node node_modules/mocha/bin/mocha.js
 
-      - name: Coveralls Parallel
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.github_token }}
-          flag-name: run-${{ matrix.node-version }}
-          parallel: true
+  coverage:
 
-  finish:
-    needs: test
+    name: Coverage with Node.js 24
     runs-on: ubuntu-latest
+
+    needs: build
+
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
+
+      - name: 'Checkout the repository'
+        uses: actions/checkout@v7
         with:
-          github-token: ${{ secrets.github_token }}
-          parallel-finished: true
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+
+      - run: corepack enable yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Download build
+        uses: actions/download-artifact@v8
+        with:
+          name: build
+
+      - name: Generate mapped LCOV from TypeScript sources
+        run: yarn run test-coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          files: ./coverage/lcov.info
+          disable_search: true
+          fail_ci_if_error: true
+          use_oidc: true
