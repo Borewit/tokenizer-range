@@ -61,7 +61,7 @@
     "update-biome": "yarn add -D --exact @biomejs/biome && npx @biomejs/biome migrate --write"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.12",
+    "@biomejs/biome": "2.6.2",
     "@types/chai": "^5.0.1",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
