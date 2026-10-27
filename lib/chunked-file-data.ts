@@ -8,7 +8,7 @@ export interface IChunk {
 export interface IChunkRange {
   startIx: number;
   endIx: number;
-  insertIx?: number
+  insertIx?: number;
 }
 
 /**
@@ -18,14 +18,12 @@ export interface IChunkRange {
  * https://github.com/aadsm/jsmediatags/blob/master/src/ChunkedFileData.js
  */
 export class ChunkedFileData {
-
   private readonly _fileData: IChunk[] = [];
 
   /**
    * Adds data to the file storage at a specific offset.
    */
   public addData(offset: number, data: Uint8Array): void {
-
     const offsetEnd = offset + data.byteLength - 1;
     const chunkRange = this._getChunkRange(offset, offsetEnd);
 
@@ -60,11 +58,7 @@ export class ChunkedFileData {
         chunk.data = this._concatData(slicedData, lastChunk.data);
       }
 
-      this._fileData.splice(
-        chunkRange.startIx,
-        chunkRange.endIx - chunkRange.startIx + 1,
-        chunk
-      );
+      this._fileData.splice(chunkRange.startIx, chunkRange.endIx - chunkRange.startIx + 1, chunk);
     }
   }
 
@@ -83,8 +77,7 @@ export class ChunkedFileData {
   }
 
   public readToBuffer(buffer: Uint8Array, offset: number, position: number, length: number): number {
-
-    const _pos_offset = position ;
+    const _pos_offset = position;
     let dataChunk: IChunk;
 
     for (let i = 0; i < this._fileData.length; i++) {
@@ -120,8 +113,7 @@ export class ChunkedFileData {
    * should be inserted in the data list (startIx == NOT_FOUND and endIX ==
    * NOT_FOUND).
    */
-  private _getChunkRange(offsetStart: number, offsetEnd: number
-  ): IChunkRange {
+  private _getChunkRange(offsetStart: number, offsetEnd: number): IChunkRange {
     let startChunkIx = NOT_FOUND;
     let endChunkIx = NOT_FOUND;
     let insertIx = 0;
@@ -137,8 +129,7 @@ export class ChunkedFileData {
       }
       // If it is adjacent we still consider it part of the range because
       // we're going end up with a single block with all contiguous data.
-      if (offsetStart <= chunkOffsetEnd + 1 &&
-        offsetEnd >= chunkOffsetStart - 1) {
+      if (offsetStart <= chunkOffsetEnd + 1 && offsetEnd >= chunkOffsetStart - 1) {
         startChunkIx = i;
         break;
       }

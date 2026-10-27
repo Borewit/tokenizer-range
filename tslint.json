@@ -6,7 +6,7 @@
     "semicolon": [true, "always", "ignore-interfaces"],
     "quotemark": [true, "single", "avoid-escape"],
     "no-bitwise": false,
-    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "trailing-comma": [true, { "multiline": "never", "singleline": "never" }],
     "object-literal-key-quotes": [true, "as-needed"],
     "variable-name": [true, "ban-keywords"],
     "object-literal-sort-keys": false,
@@ -21,6 +21,5 @@
   "jsRules": {
     "curly": false
   },
-  "rulesDirectory": [
-  ]
+  "rulesDirectory": []
 }
