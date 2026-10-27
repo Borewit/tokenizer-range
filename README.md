@@ -2,6 +2,7 @@
 [![CodeQL](https://github.com/Borewit/tokenizer-range/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/Borewit/tokenizer-range/actions/workflows/codeql.yml)
 [![NPM version](https://badge.fury.io/js/%40tokenizer%2Frange.svg)](https://badge.fury.io/js/%40tokenizer%2Frange)
 [![npm downloads](http://img.shields.io/npm/dm/@tokenizer/range.svg)](https://npmcharts.com/compare/@tokenizer/range?interval=30)
+[![codecov](https://codecov.io/gh/Borewit/tokenizer-range/branch/master/graph/badge.svg)](https://codecov.io/gh/Borewit/tokenizer-range)
 [![Known Vulnerabilities](https://snyk.io/test/github/Borewit/tokenizer-range/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Borewit/tokenizer-range?targetFile=package.json)
 
 # @tokenizer/range
@@ -19,6 +20,7 @@ The Node.js minimum matches the existing `strtok3` dependency; Node.js 16 is no 
 Development installs and builds use Node.js 24 and the Yarn version pinned in `package.json`.
 Run `corepack enable yarn`, `yarn install --immutable`, then `yarn build` before `yarn test` or `yarn test-coverage`.
 Tests execute the compiled JavaScript without a TypeScript loader. CI runs them on Node.js 18, 20, 22 and 24.
+Coverage is collected in a separate Node.js 24 job and uploaded to Codecov.
 
 ## Installation
 
