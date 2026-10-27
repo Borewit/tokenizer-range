@@ -1,14 +1,19 @@
-import { AbstractTokenizer, type IRandomAccessTokenizer, type IReadChunkOptions, type IRandomAccessFileInfo } from 'strtok3';
+import initDebug from 'debug';
+import {
+  AbstractTokenizer,
+  type IRandomAccessFileInfo,
+  type IRandomAccessTokenizer,
+  type IReadChunkOptions
+} from 'strtok3';
 import { ChunkedFileData } from './chunked-file-data.js';
 import type { IContentRangeType, IHeadRequestInfo, IRangeRequestClient } from './types.js';
-import initDebug from 'debug';
 
 const debug = initDebug('range-request-reader');
 
 interface IRangeRequestTokenizerOptions {
   fileInfo: IHeadRequestInfo;
   minimumChunkSize: number;
-  abortSignal?: AbortSignal
+  abortSignal?: AbortSignal;
 }
 
 /**
@@ -19,13 +24,15 @@ interface IRangeRequestTokenizerOptions {
  * https://github.com/aadsm/jsmediatags/blob/master/src/XhrFileReader.js
  */
 export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomAccessTokenizer {
-
   private _fileData: ChunkedFileData;
 
   public readonly fileInfo: IRandomAccessFileInfo;
 
-  constructor(private rangeRequestClient: IRangeRequestClient, private options: IRangeRequestTokenizerOptions) {
-    super({fileInfo: options.fileInfo});
+  constructor(
+    private rangeRequestClient: IRangeRequestClient,
+    private options: IRangeRequestTokenizerOptions
+  ) {
+    super({ fileInfo: options.fileInfo });
     this.fileInfo = options.fileInfo;
     if (Number.isNaN(options.minimumChunkSize)) {
       throw new Error('minimumChunkSize must be a number');
@@ -37,7 +44,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
   }
 
   setPosition(position: number): void {
-        this.position = position;
+    this.position = position;
   }
 
   /**
@@ -47,7 +54,6 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
    * @returns Promise with number of bytes read
    */
   public async readBuffer(uint8array: Uint8Array, options?: IReadChunkOptions): Promise<number> {
-
     if (options?.position) {
       this.position = options.position;
     }
@@ -66,20 +72,26 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
   public async peekBuffer(uint8array: Uint8Array, options?: IReadChunkOptions): Promise<number> {
     const offset = 0;
 
-    if (!this.fileInfo) throw new Error('File-info missing');
+    if (!this.fileInfo) {
+      throw new Error('File-info missing');
+    }
     const size = this.fileInfo.size as number;
 
     const position = options?.position !== undefined ? options.position : this.position;
 
     // requested length
-    const requested = options?.length !== undefined ? (options.length as number) : (uint8array.length - offset);
-    if (requested <= 0) return 0;
+    const requested = options?.length !== undefined ? (options.length as number) : uint8array.length - offset;
+    if (requested <= 0) {
+      return 0;
+    }
 
     const available = size - position;
 
     // Past EOF
     if (available <= 0) {
-      if (options?.mayBeLess) return 0;
+      if (options?.mayBeLess) {
+        return 0;
+      }
       throw new RangeError(`peekBuffer position ${position} is beyond EOF ${size}`);
     }
 
@@ -102,7 +114,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
    * @return actual number of bytes ignored
    */
   public async ignore(length: number): Promise<number> {
-    const bytesLeft = this.fileInfo.size as number - this.position;
+    const bytesLeft = (this.fileInfo.size as number) - this.position;
     if (length <= bytesLeft) {
       this.position += length;
       return length;
@@ -120,10 +132,9 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
   }
 
   private async loadRange(range: [number, number]): Promise<void> {
-
     debug(`request range ${range[0]}..${range[1]}`);
 
-    if (range[0] > ((this.fileInfo.size as number) - 1)) {
+    if (range[0] > (this.fileInfo.size as number) - 1) {
       throw new Error('End-Of-File');
     }
 
@@ -140,7 +151,7 @@ export class RangeRequestTokenizer extends AbstractTokenizer implements IRandomA
     range = roundRange(range, this.options.minimumChunkSize);
 
     // Upper range should not be greater than max file size
-    range[1] = Math.min(this.fileInfo.size as number - 1, range[1]);
+    range[1] = Math.min((this.fileInfo.size as number) - 1, range[1]);
 
     debug(`blocked range: ${range[0]}..${range[1]}`);
 
@@ -169,9 +180,7 @@ export function parseContentRange(contentRange: string): IContentRangeType {
   }
   debug(`parseContentRange response: contentRange=${contentRange}`);
 
-  const parsedContentRange = contentRange.match(
-    /bytes (\d+)-(\d+)\/(?:(\d+)|\*)/i
-  );
+  const parsedContentRange = contentRange.match(/bytes (\d+)-(\d+)\/(?:(\d+)|\*)/i);
   if (!parsedContentRange) {
     throw new Error(`FIXME: Unknown Content-Range syntax: ${contentRange}`);
   }

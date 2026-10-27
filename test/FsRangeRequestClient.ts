@@ -1,15 +1,13 @@
-import * as path from 'node:path';
 import * as assert from 'node:assert';
 import * as file from 'node:fs/promises';
+import * as path from 'node:path';
 import type { IHeadRequestInfo, IRangeRequestClient, IRangeRequestResponse } from '../lib/types.js';
 
 /**
  * RangeRequest client mockup
  */
 export class FsRangeRequestClient implements IRangeRequestClient {
-
-  public constructor(private fixturePath: string) {
-  }
+  public constructor(private fixturePath: string) {}
 
   public async getHeadInfo(): Promise<IHeadRequestInfo> {
     const stat = await file.stat(this.fixturePath);
@@ -21,7 +19,7 @@ export class FsRangeRequestClient implements IRangeRequestClient {
     };
   }
 
-  public async getResponse(method: string, range?: [number, number]): Promise<IRangeRequestResponse> {
+  public async getResponse(_method: string, range?: [number, number]): Promise<IRangeRequestResponse> {
     const stat = await file.stat(this.fixturePath);
     range = range ? range : [0, stat.size - 1];
     return {
@@ -50,15 +48,18 @@ export class FsRangeRequestClient implements IRangeRequestClient {
   private getContentType() {
     const extension = path.extname(this.fixturePath);
     switch (extension) {
-      case '.mp3': return 'audio/mpeg';
-      case '.m4a': return 'audio/m4a';
-      case '.flac': return 'audio/flac';
-      default: return null;
+      case '.mp3':
+        return 'audio/mpeg';
+      case '.m4a':
+        return 'audio/m4a';
+      case '.flac':
+        return 'audio/flac';
+      default:
+        return null;
     }
   }
 
   abort(): void {
     // Abort not implemented
   }
-
 }

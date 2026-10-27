@@ -34,7 +34,6 @@ export interface IHeadRequestInfo extends IRandomAccessFileInfo {
 }
 
 export interface IRangeRequestResponse extends IHeadRequestInfo {
-
   contentRange?: IContentRangeType;
 
   arrayBuffer: () => Promise<Uint8Array>;
@@ -44,7 +43,6 @@ export interface IRangeRequestResponse extends IHeadRequestInfo {
  * Implementation of the range-request-client
  */
 export interface IRangeRequestClient {
-
   /**
    * Head request to determine the size and MIME-type of the file
    * @return HEAD-request information

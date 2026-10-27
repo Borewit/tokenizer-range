@@ -1,6 +1,6 @@
-import type { IRangeRequestConfig, IHeadRequestInfo, IRangeRequestClient } from './types.js';
-import { RangeRequestTokenizer, roundRange } from './range-request-tokenizer.js';
 import initDebug from 'debug';
+import { RangeRequestTokenizer, roundRange } from './range-request-tokenizer.js';
+import type { IHeadRequestInfo, IRangeRequestClient, IRangeRequestConfig } from './types.js';
 
 const debug = initDebug('range-request-reader');
 
@@ -11,19 +11,17 @@ interface IInternalRangeRequestConfig extends IRangeRequestConfig {
 }
 
 export class RangeRequestFactory {
-
   public config: IInternalRangeRequestConfig = {
     avoidHeadRequests: false,
     initialChunkSize: 4 * 1024,
     minimumChunkSize: 1024
   };
 
-  constructor(private rangeRequestClient: IRangeRequestClient) {
-  }
+  constructor(private rangeRequestClient: IRangeRequestClient) {}
 
   public async initTokenizer(config?: IRangeRequestConfig): Promise<RangeRequestTokenizer> {
     if (config) {
-      this.config = {...this.config, ...config};
+      this.config = { ...this.config, ...config };
     }
     const headRequestInfo = await this.getHeadRequestInfo();
     if (!headRequestInfo.acceptPartialRequests) {
@@ -41,18 +39,17 @@ export class RangeRequestFactory {
    * @return Promise with head-request-info, extending tokenizer file-info.
    */
   public getHeadRequestInfo(): Promise<IHeadRequestInfo> {
-    return this.config.avoidHeadRequests ?
-      this.fetchFileInfoWithGetRequest() :
-      this.fetchFileInfoWithHeadRequest();
+    return this.config.avoidHeadRequests ? this.fetchFileInfoWithGetRequest() : this.fetchFileInfoWithHeadRequest();
   }
 
   private async fetchFileInfoWithHeadRequest(): Promise<IHeadRequestInfo> {
-
     debug('_fetchSizeWithHeadRequest()');
     if (this.rangeRequestClient.getHeadInfo) {
       const info = await this.rangeRequestClient.getHeadInfo();
       if (info.size) {
-        debug(`MIME-type=${info.mimeType}, content-length=${info.size}, accept-partial-requests=${info.acceptPartialRequests}`);
+        debug(
+          `MIME-type=${info.mimeType}, content-length=${info.size}, accept-partial-requests=${info.acceptPartialRequests}`
+        );
         return info;
       }
     }
@@ -66,7 +63,9 @@ export class RangeRequestFactory {
     const range = roundRange([0, this.config.initialChunkSize], this.config.minimumChunkSize);
 
     const response = await this.rangeRequestClient.getResponse('GET', range);
-    debug(`_fetchSizeWithGetRequest response: contentRange=[${response.contentRange?.firstBytePosition}-${response.contentRange?.lastBytePosition}/${response.contentRange?.instanceLength}]`);
+    debug(
+      `_fetchSizeWithGetRequest response: contentRange=[${response.contentRange?.firstBytePosition}-${response.contentRange?.lastBytePosition}/${response.contentRange?.instanceLength}]`
+    );
 
     if (!response.contentRange) {
       throw new Error('Failed to resolve content range (file size)');

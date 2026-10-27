@@ -2,11 +2,10 @@
  * Code based on: https://github.com/aadsm/jsmediatags/blob/386dc72f6fc96d15138c408956ca501e1b174fbd/src/__tests__/ChunkedFileData-test.js
  */
 
-import { ChunkedFileData, type IChunk, type IChunkRange } from '../lib/chunked-file-data.js';
 import { expect } from 'chai';
+import { ChunkedFileData, type IChunk, type IChunkRange } from '../lib/chunked-file-data.js';
 
 const NOT_FOUND = -1;
-
 
 function getByteAt(chunkedFileData: ChunkedFileData | PublicChunkedFileData, offset: number): number {
   const buf = new Uint8Array(1);
@@ -137,17 +136,6 @@ describe('class ChunkedFileData', () => {
         const chunk = chunkedFileData._fileData[0];
         expect(chunk.offset).to.eql(offset);
         expect(chunk.data).to.eql(sliceData(offset, 70));
-      });
-
-      it('should expand chunk when data coincides exactly with the start of a chunk', () => {
-        const offset = 180;
-        const data = sliceData(offset, 20);
-        const chunksCount = chunkedFileData._fileData.length;
-
-        chunkedFileData.addData(offset, data);
-        expect(chunkedFileData._fileData.length).to.eql(chunksCount);
-        const chunk = chunkedFileData._fileData[1];
-        expect(chunk.data).to.eql(sliceData(180, 70));
       });
 
       it('should expand chunk when data coincides exactly with the start of a chunk', () => {

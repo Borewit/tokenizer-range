@@ -1,7 +1,7 @@
-import { assert } from 'chai';
-import * as mm from 'music-metadata';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assert } from 'chai';
+import * as mm from 'music-metadata';
 
 import * as rangeRequestTokenizer from '../lib/index.js';
 import { FsRangeRequestClient } from './FsRangeRequestClient.js';
@@ -15,8 +15,7 @@ type TokenizerWithLoadRange = {
   loadRange(range: RangeTuple): Promise<void>;
 };
 
-describe('range-request-client', function() {
-
+describe('range-request-client', function () {
   this.timeout(10 * 1000);
 
   const config = {
@@ -29,7 +28,7 @@ describe('range-request-client', function() {
 
     const tokenizer = await rangeRequestTokenizer.tokenizer(rangeRequestClient, config);
     try {
-      const {format, common} = await mm.parseFromTokenizer(tokenizer);
+      const { format, common } = await mm.parseFromTokenizer(tokenizer);
 
       assert.equal(format.container, 'MPEG', 'metadata.format.container');
       assert.equal(format.codec, 'MPEG 1 Layer 3', 'format.codec');
@@ -59,7 +58,6 @@ describe('range-request-client', function() {
     } finally {
       await tokenizer.close();
     }
-
   });
 
   it('Support random-access-read', async () => {
@@ -75,10 +73,14 @@ describe('range-request-client', function() {
       // Read ID3v1 header at the end of the file
       const id3v1HeaderSize = 128;
       const id3v1Header = new Uint8Array(id3v1HeaderSize);
-      await tokenizer.readBuffer(id3v1Header,{position: tokenizer.fileInfo.size - id3v1HeaderSize});
+      await tokenizer.readBuffer(id3v1Header, { position: tokenizer.fileInfo.size - id3v1HeaderSize });
       const id3v1Tag = textDecoder.decode(id3v1Header.subarray(0, 3));
       assert.strictEqual(id3v1Tag, 'TAG');
-      assert.strictEqual(tokenizer.position, tokenizer.fileInfo.size, 'Tokenizer position should be at the end of the file');
+      assert.strictEqual(
+        tokenizer.position,
+        tokenizer.fileInfo.size,
+        'Tokenizer position should be at the end of the file'
+      );
       tokenizer.setPosition(0);
       assert.strictEqual(tokenizer.position, 0, 'Tokenizer position should be at the beginning of the file');
 
@@ -86,11 +88,10 @@ describe('range-request-client', function() {
       const id3v2Header = new Uint8Array(3);
       await tokenizer.readBuffer(id3v2Header);
       const id3v2Tag = textDecoder.decode(id3v2Header);
-      assert.strictEqual(id3v2Tag, "ID3", 'Read start tag of ID3v2 header at the beginning of the file');
+      assert.strictEqual(id3v2Tag, 'ID3', 'Read start tag of ID3v2 header at the beginning of the file');
     } finally {
       await tokenizer.close();
     }
-
   });
 
   it('RangeRequestTokenizer.peekBuffer should not call loadRange with inverted range when mayBeLess is true', async () => {
@@ -124,5 +125,4 @@ describe('range-request-client', function() {
       await tokenizer.close();
     }
   });
-
 });
