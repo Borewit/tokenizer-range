@@ -4,13 +4,15 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    types: [opened, reopened, synchronize]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: release-drafter-${{ github.ref }}
+  group: release-drafter-master
   cancel-in-progress: false
 
 jobs:
@@ -20,4 +22,7 @@ jobs:
       pull-requests: read
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v7.10.0
+      - uses: release-drafter/release-drafter@978bb0b30c5ee8cdd332ced253758157150d43f0 # v7.10.0
+        with:
+          commitish: master
+          dry-run: ${{ github.event_name == 'pull_request' }}
