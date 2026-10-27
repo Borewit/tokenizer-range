@@ -22,11 +22,11 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 20.x
+          node-version: 24.x
 
       - run: corepack enable yarn
 
-      - name: Install production dependencies
+      - name: Install dependencies
         run: yarn install --immutable
 
       - name: Build & Code analysis
@@ -53,12 +53,9 @@ jobs:
 
     needs: build
 
-    env:
-      YARN_IGNORE_NODE: 1
-
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x, 22.x, 24.x]
+        node-version: [18.x, 20.x, 22.x, 24.x]
 
     steps:
 
@@ -67,10 +64,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Test with Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js for dependency installation
         uses: actions/setup-node@v7
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 24.x
 
       - run: corepack enable yarn
 
@@ -82,8 +79,13 @@ jobs:
         with:
           name: build
 
-      - name: Test with Node.js ${{ matrix.node-version }}
-        run: yarn run test-coverage
+      - name: Set up runtime under test
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Test compiled JavaScript with Node.js ${{ matrix.node-version }}
+        run: node node_modules/c8/bin/c8.js node node_modules/mocha/bin/mocha.js
 
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@v2
