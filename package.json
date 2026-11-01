@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "debug": "^4.4.3",
-    "strtok3": "^10.3.4"
+    "strtok3": "^10.6.3"
   },
   "packageManager": "yarn@4.18.1"
 }
