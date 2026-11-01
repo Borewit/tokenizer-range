@@ -20,6 +20,7 @@ The Node.js minimum matches the existing `strtok3` dependency; Node.js 16 is no 
 Development installs and builds use Node.js 24 and the Yarn version pinned in `package.json`.
 Run `corepack enable yarn`, `yarn install --immutable`, then `yarn build` before `yarn test` or `yarn test-coverage`.
 Tests execute the compiled JavaScript without a TypeScript loader. CI runs them on Node.js 18, 20, 22 and 24.
+The music-metadata integration tests require Node.js 20 or later and are skipped on Node.js 18.
 Coverage is collected in a separate Node.js 24 job and uploaded to Codecov.
 
 ## Installation
