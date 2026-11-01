@@ -1,7 +1,6 @@
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert } from 'chai';
-import * as mm from 'music-metadata';
 
 import * as rangeRequestTokenizer from '../lib/index.js';
 import { FsRangeRequestClient } from './FsRangeRequestClient.js';
@@ -15,6 +14,21 @@ type TokenizerWithLoadRange = {
   loadRange(range: RangeTuple): Promise<void>;
 };
 
+const musicMetadataMinimumNodeMajor = 20;
+const nodeMajorVersion = Number.parseInt(process.versions.node.split('.')[0], 10);
+
+/**
+ * music-metadata uses syntax that Node.js 18 cannot parse, so only run its integration
+ * tests on the runtimes it supports.
+ */
+function itMusicMetadata(title: string, test: () => Promise<void>): void {
+  if (nodeMajorVersion >= musicMetadataMinimumNodeMajor) {
+    it(title, test);
+  } else {
+    it.skip(`${title} (requires Node.js ${musicMetadataMinimumNodeMajor} or later)`, test);
+  }
+}
+
 describe('range-request-client', function () {
   this.timeout(10 * 1000);
 
@@ -22,7 +36,8 @@ describe('range-request-client', function () {
     avoidHeadRequests: false
   };
 
-  it('Parse MP3 using range requests', async () => {
+  itMusicMetadata('Parse MP3 using range requests', async () => {
+    const mm = await import('music-metadata');
     const fixturePath = path.join(__dirname, 'fixture', '02 - Poxfil - Solid Ground.mp3');
     const rangeRequestClient = new FsRangeRequestClient(fixturePath);
 
@@ -42,7 +57,8 @@ describe('range-request-client', function () {
     }
   });
 
-  it('Parse empty PDF file', async () => {
+  itMusicMetadata('Parse empty PDF file', async () => {
+    const mm = await import('music-metadata');
     const fixturePath = path.join(__dirname, 'fixture', 'emptypage.pdf');
     const rangeRequestClient = new FsRangeRequestClient(fixturePath);
 
